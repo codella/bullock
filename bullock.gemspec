@@ -6,7 +6,14 @@ Gem::Specification.new do |s|
   s.description = "A simple hello world gem"
   s.authors     = ["Mauro Codella"]
   s.email       = 'mcodella@gmail.com'
-  s.files       = []
   s.homepage    = 'http://github.com/codella/bullock'
   s.license     = 'apache2'
+
+  s.files         = `git ls-files`.split("\n")
+  s.test_files    = `git ls-files -- spec/*`.split("\n")
+  s.require_paths = ["lib"]
+
+  s.add_development_dependency "rake"
+  s.add_development_dependency "byebug"
+  s.add_development_dependency "rspec", "~> 3.2.0"
 end
