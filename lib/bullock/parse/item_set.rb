@@ -1,7 +1,11 @@
 module Bullock
   module Parse
     class ItemSet
-      def self.create_from_productions(productions)
+      def self.from_productions(productions)
+        tracks = produtions.map do |production|
+          Track.from_production(production)
+        end
+        new(tracks)
       end
 
       def initialize(tracks)

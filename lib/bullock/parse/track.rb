@@ -1,24 +1,24 @@
 module Bullock
   module Parse
     class Track
-      def initialize(symbols, pointer)
-        @symbols = symbols
+      def self.from_production(production)
+        new(prodcution.non_terminal, production.expansion, 0)
+      end
+
+      def initialize(non_terminal, expansion, pointer)
+        @non_terminal = non_terminal
+        @expansion = expansion
         @pointer = pointer
       end
 
       def proceed(step)
         return unless step == pointed
-        new(symbols, pointer + 1)
+        new(non_terminal, expansion, pointer + 1)
       end
 
       # returns `nil` when points over the last symbol
       def pointed
         symbols[pointer]
-      end
-
-      def ==(other_track)
-        symbols == other_track.symbols &&
-          pointer == other_track.pointer
       end
 
       private
