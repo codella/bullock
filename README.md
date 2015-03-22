@@ -9,11 +9,11 @@ lexer = Bullock.lexer do
   rule(/regex/, :state) { |match| ... }
   rule(/another_regex/) { |match| ... }
 end
+
+tokens = lexer.lex(string)
 ```
 
 ```ruby
-tokens = lexer.lex(string)
-
 parser = Bullock.parser do
   symbol(:a) do
     expands('a b .c') { |c| ... }
