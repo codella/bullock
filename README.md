@@ -7,7 +7,7 @@ A simple Ruby PEG implementation - no strings attached!
 ```ruby
 lexer = Bullock.lexer do
   rule(/regex/, :state) { |match| ... }
-  rule(/another_regex/) { |match| ... }
+  rule(/another_regex/) { ... }
 end
 
 tokens = lexer.lex(string)
