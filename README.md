@@ -16,8 +16,8 @@ tokens = lexer.lex(string)
 ```ruby
 parser = Bullock.parser do
   symbol(:a) do
-    expands('a b .c') { |c| ... }
-    expands('x y z') { |x, y, z| ... }
+    produces('a b .c') { |c| ... }
+    produces('x y z') { |x, y, z| ... }
   end
 
   production(:b, 'x .Y z') { |y| ... }

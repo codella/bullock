@@ -3,7 +3,7 @@ require 'bullock/parse/symbol_expansions'
 
 describe Bullock::Parse::SymbolExpansions do
   describe "#expands" do
-    it "no Productions are given if expands is never invoked" do
+    it "no Productions are given if #produces is never invoked" do
       instance = Bullock::Parse::SymbolExpansions.new(:symbol)
 
       expect(instance.productions).to be_empty
@@ -12,7 +12,7 @@ describe Bullock::Parse::SymbolExpansions do
     it "creates a Production with symbol and a single expansion" do
       instance = Bullock::Parse::SymbolExpansions.new(:symbol)
 
-      instance.expands('a b c')
+      instance.produces('a b c')
 
       production = Bullock::Parse::Production.new(:symbol, 'a b c')
       expect(instance.productions).to eq [production]
@@ -22,7 +22,7 @@ describe Bullock::Parse::SymbolExpansions do
       instance = Bullock::Parse::SymbolExpansions.new(:symbol)
 
       instance.instance_eval do
-        expands('a b c')
+        produces('a b c')
       end
 
       production = Bullock::Parse::Production.new(:symbol, 'a b c')
@@ -32,8 +32,8 @@ describe Bullock::Parse::SymbolExpansions do
     it "creates Productions with symbol and and two expansions" do
       instance = Bullock::Parse::SymbolExpansions.new(:symbol)
 
-      instance.expands('a b c')
-      instance.expands('x y z')
+      instance.produces('a b c')
+      instance.produces('x y z')
 
       abc_production = Bullock::Parse::Production.new(:symbol, 'a b c')
       xyz_production = Bullock::Parse::Production.new(:symbol, 'x y z')
