@@ -1,8 +1,9 @@
 <img src="logo.png" height='64'>
+
 # Bullock
 A simple Ruby PEG implementation - no strings attached!
 
-# A Quick Example of Usage
+## Approaching Lexing and Parsing
 
 ```ruby
 lexer = Bullock.lexer do
@@ -20,7 +21,7 @@ parser = Bullock.parser do
     produces('x y z') { |x, y, z| ... }
   end
 
-  production(:b, 'x .Y z') { |y| ... }
+  production(:b, 'x .Y? z') { |y| ... }
 end
 
 outcome = parser.parse(tokens)
