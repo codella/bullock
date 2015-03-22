@@ -3,17 +3,15 @@ require 'bullock/parse/lalr1'
 
 class Bullock
   class << self
-    def lex(string, &definition)
-      Bullock::Lex::Lexer.new(definition)
+    def lexer(string, &definition)
+      Bullock::Lex::Lexer.new.instance_eval(definition)
     end
 
-    def parse(*)
-      lalr1(*)
-    end
+    def parser(tokens, start:, &definition)
+      grammar = Grammar.new(start)
+      grammar.instance_eval(definition)
 
-    def lalr1(tokens, start: :start, &definition)
-      parser = Bullock::Parse::LALR1.new(start, definition)
-      parser.parse(tokens)
+      Bullock::Parse::LALR1.new(grammar)
     end
   end
 end
