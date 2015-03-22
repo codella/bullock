@@ -2,8 +2,8 @@ Gem::Specification.new do |s|
   s.name        = 'bullock'
   s.version     = '0.0.1'
   s.date        = '2015-03-21'
-  s.summary     = "A minimal Ruby PEG"
-  s.description = "A simple hello world gem"
+  s.summary     = "A simple Ruby PEG implementation"
+  s.description = "A simple Ruby PEG implementation - no strings attached!"
   s.authors     = ["Mauro Codella"]
   s.email       = 'mcodella@gmail.com'
   s.homepage    = 'http://github.com/codella/bullock'
