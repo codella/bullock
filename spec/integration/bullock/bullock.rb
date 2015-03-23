@@ -8,6 +8,8 @@
 # tokens = lexer.lex(string)
 #
 # parser = Bullock.parser do
+#   start_from :a
+#
 #   symbol(:a) do
 #     expands('a b .c') { |c| ... }
 #     expands('x y z') { |x, y, z| ... }

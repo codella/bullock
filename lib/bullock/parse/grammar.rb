@@ -3,9 +3,14 @@ module Bullock
     class Grammar
       attr_reader :start, :productions
 
-      def initialize(start:)
-        @start = start
+      def initialize
+        @start = :start
         @productions = []
+      end
+
+      def start_from(symbol)
+        raise "Start point must be a Symbol" unless symbol.is_a? Symbol
+        @start = symbol
       end
 
       def symbol(symbol, &expansions)

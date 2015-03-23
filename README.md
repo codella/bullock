@@ -43,6 +43,8 @@ tokens = lexer.lex(string)
 
 ```ruby
 parser = Bullock.parser do
+  start_from :a
+
   symbol(:a) do
     produces('a b .c') { |c| ... }
     produces('x y z') { |x, y, z| ... }
