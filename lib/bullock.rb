@@ -4,7 +4,7 @@ require 'bullock/parse/lalr1'
 class Bullock
   class << self
     def lexer(string, &definition)
-      Bullock::Lex::Lexer.new.instance_eval(definition)
+      Bullock::Lex::MatchFirst.new.instance_eval(definition)
     end
 
     def parser(tokens, start:, &definition)
