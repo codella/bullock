@@ -2,28 +2,28 @@ module Bullock
   module Parse
     class Track
       def self.from_production(production)
-        new(prodcution.non_terminal, production.expansion, 0)
+        new(production.symbol, production.expansion, 0)
       end
 
-      def initialize(non_terminal, expansion, pointer)
-        @non_terminal = non_terminal
+      def initialize(symbol, expansion, pointer)
+        @symbol = symbol
         @expansion = expansion
         @pointer = pointer
       end
 
       def proceed(step)
         return unless step == pointed
-        new(non_terminal, expansion, pointer + 1)
+        new(symbol, expansion, pointer + 1)
       end
 
       def pointed
-        return :EOT unless pointer < symbols.length
-        symbols[pointer]
+        return :EOT unless pointer < expansion.length
+        expansion[pointer]
       end
 
       private
 
-      attr_reader :symbols,  :pointer
+      attr_reader :expansion, :pointer
     end
   end
 end
