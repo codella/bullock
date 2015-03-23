@@ -1,15 +1,7 @@
 module Bullock
   module Lex
     class MatchFirst
-      def initialize
-        @rules = {}
-      end
-
-      def rule(regex, state = :base, &action)
-        rules[regex.freeze] = { state: state, action: action }
-      end
-
-      def lex(string, **context)
+      def lex(string, rules, **context)
         scanner = StringScanner.new(string)
         tokens = []
         environment = Bullock::Lex::Environment.new
@@ -30,7 +22,7 @@ module Bullock
             raise "None of the specified rules could match `#{scanner.rest.first(5)}...`"
           end
         end
-        tokens
+        tokens << :EOS
       end
 
       private
