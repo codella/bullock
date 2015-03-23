@@ -17,7 +17,8 @@ module Bullock
         scanner = StringScanner.new(string)
         tokens = []
         environment = Bullock::Lex::Environment.new
-        line = column = 1
+        line = 1
+        column = 0
         until scanner.eos?
           catch :matched do
             rules.each do |rule, meta|
