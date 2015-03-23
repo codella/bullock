@@ -16,8 +16,8 @@ module Bullock
         new(non_terminal, expansion, pointer + 1)
       end
 
-      # returns `nil` when points over the last symbol
       def pointed
+        return :EOT unless pointer < symbols.length
         symbols[pointer]
       end
 
