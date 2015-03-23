@@ -1,4 +1,4 @@
-require 'bullock/lex/lexer'
+require 'bullock/lex/match_first'
 require 'bullock/parse/lalr1'
 
 class Bullock
@@ -7,7 +7,7 @@ class Bullock
       Bullock::Lex::MatchFirst.new.instance_eval(definition)
     end
 
-    def parser(tokens, start:, &definition)
+    def parser(tokens, start: :start, &definition)
       grammar = Grammar.new(start)
       grammar.instance_eval(definition)
 

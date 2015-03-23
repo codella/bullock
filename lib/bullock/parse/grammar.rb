@@ -3,7 +3,7 @@ module Bullock
     class Grammar
       attr_reader :start, :productions
 
-      def initialize(start: :start)
+      def initialize(start:)
         @start = start
         @productions = []
       end
