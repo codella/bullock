@@ -1,6 +1,6 @@
 module Bullock
   module Lex
-    class Definition
+    class RulesCollector
       attr_reader :rules
 
       def initialize

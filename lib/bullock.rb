@@ -1,13 +1,16 @@
+require 'bullock/lex/rules_collector'
 require 'bullock/lex/match_first'
+
+require 'bullock/parse/grammar'
 require 'bullock/parse/lalr1'
 
 class Bullock
   class << self
     def lexer(string, **context, &definition)
-      lexer_definition = Bullock::Lex::Definition.new
-      lexer_definition.instance_eval(definition)
+      rules_collector = Bullock::Lex::RulesCollector.new
+      rules_collector.instance_eval(definition)
 
-      Bullock::Lex::MatchFirst.new(lexer_definition.rules, string, context)
+      Bullock::Lex::MatchFirst.new(rules_collector.rules, string, context)
     end
 
     def parser(tokens, **context, &definition)
