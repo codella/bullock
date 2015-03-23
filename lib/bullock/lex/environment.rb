@@ -2,7 +2,7 @@ module Bullock
   module Lex
     class Environment
       def initialize
-        @states = []
+        @states = [:base]
       end
 
       def current_state
@@ -14,7 +14,7 @@ module Bullock
       end
 
       def pop_state
-        raise "There's no state on the stack" unless states.any?
+        raise "There's no state on the stack" unless states != [:base]
         states.pop
       end
 

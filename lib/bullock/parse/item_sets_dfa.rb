@@ -4,7 +4,7 @@ module Bullock
       def process(grammar)
         dfa = []
 
-        item_sets = [ItemSet.create_from_productions(gramma.productions)]
+        item_sets = [ItemSet.create_from_productions(grammar.productions)]
         item_sets.each do |item_set|
           item_set.pointed_symbols.each do |step|
             destination_item_set = item_set.apply(step)

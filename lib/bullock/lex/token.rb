@@ -1,6 +1,9 @@
 module Bullock
   module Lex
     class Token
+
+      attr_reader :token, :value, :line, :column, :offset, :context
+
       def initialize(outcome, match, line, column, offset, context)
         @token, @value = *normalize_outcome(outcome, match)
         @line = line
@@ -9,14 +12,12 @@ module Bullock
         @context = context
       end
 
-      attr_reader :token, :value, :line, :column, :offset, :context
-
       private
 
       def normalize_outcome(outcome, match)
         case outcome
         when Array
-          break outcome if outcome.first.is_a?(Symbol)
+          return outcome if outcome.first.is_a?(Symbol)
           raise "The outcome array must be of type [Symbol, Object]"
         when Symbol
           [outcome, match]
@@ -26,7 +27,9 @@ module Bullock
           message << "associated to the Token"
           raise message
         end
-      def
+      end
+
+      EOS = new(:EOS, nil, nil, nil, nil, {})
     end
   end
 end
