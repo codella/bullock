@@ -6,7 +6,7 @@ module Bullock
       end
 
       def rule(regex, state = :base, &action)
-        rules[regex] = { state: state, action: action }
+        rules[regex.freeze] = { state: state, action: action }
       end
 
       def lex(string, **context)
