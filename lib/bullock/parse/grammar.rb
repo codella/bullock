@@ -4,8 +4,12 @@ module Bullock
       attr_reader :start, :productions
 
       def initialize
-        @start = :start
         @productions = []
+      end
+
+      def start
+        return if productions.empty?
+        @start || productions.first.symbol
       end
 
       def start_from(symbol)
