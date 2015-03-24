@@ -16,7 +16,10 @@ module Bullock
       private
 
       def create_expansion(expansion_string)
-        expansion_string.split(' ').map do |symbol_string|
+        expansions = expansion_string.split(' ')
+        raise "Productions cannot have empty expansion" unless expansions.any?
+
+        expansions.map do |symbol_string|
           match = /(\.?)(\w+)(\??)/.match(symbol_string)
           {
             symbol: match[2].to_sym,

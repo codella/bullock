@@ -18,8 +18,10 @@ module Bullock
 
       def apply(step)
         proceeded_tracks = tracks.map do |track|
-          track.proceed(step)
-        end
+          next unless track.pointed == step
+          track.proceed
+        end.compact
+
         new(proceeded_tracks)
       end
 

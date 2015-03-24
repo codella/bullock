@@ -11,9 +11,9 @@ module Bullock
         @pointer = pointer
       end
 
-      def proceed(step)
-        return unless step == pointed
-        new(symbol, expansion, pointer + 1)
+      def proceed
+        next_pointer = [pointer + 1, expansion.length].min
+        Bullock::Parse::Track.new(symbol, expansion, next_pointer)
       end
 
       def pointed
@@ -23,7 +23,7 @@ module Bullock
 
       private
 
-      attr_reader :expansion, :pointer
+      attr_reader :symbol, :expansion, :pointer
     end
   end
 end
