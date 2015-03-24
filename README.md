@@ -31,6 +31,8 @@ Using bundler 1.8.2
 
 **11 gems needed in development mode, and 0 gems needed at runtime!**
 
+## Why This Logo?
+
 ## How to Bullock
 
 ### Lexing
