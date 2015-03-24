@@ -33,6 +33,7 @@ Using bundler 1.8.2
 
 ## Approaching Lexing and Parsing
 
+### Lexing
 ```ruby
 lexer = Bullock.lexer do
   rule(/regex/, :state) { |match| ... }
@@ -42,6 +43,7 @@ end
 tokens = lexer.lex(string)
 ```
 
+### Parsing
 ```ruby
 parser = Bullock.parser do
   start_from :a
@@ -56,3 +58,17 @@ end
 
 outcome = parser.parse(tokens)
 ```
+
+## Error Handling
+
+## How to Contribute
+
+### Principles
+
+### Practices
+
+## Examples
+
+### Calculator
+
+### External DSL
