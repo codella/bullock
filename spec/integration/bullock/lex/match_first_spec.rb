@@ -105,6 +105,29 @@ describe Bullock::Lex::MatchFirst do
     end
 
     describe "length" do
+      it "when matching a 1 character token" do
+        rules = {
+          /x+/ => {
+            state: :base,
+            action: ->(match){ :X }
+          }
+        }
+
+        lexer = Bullock::Lex::MatchFirst.new(rules)
+        expect(lexer.lex('x').first.length).to eq 1
+      end
+
+      it "when matching a 2 character token" do
+        rules = {
+          /x+/ => {
+            state: :base,
+            action: ->(match){ :X }
+          }
+        }
+
+        lexer = Bullock::Lex::MatchFirst.new(rules)
+        expect(lexer.lex('xx').first.length).to eq 2
+      end
     end
 
     describe "offset" do

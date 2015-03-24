@@ -26,10 +26,10 @@ module Bullock
           catch :matched do
             rules.each do |rule, meta|
               next unless meta[:state] == environment.current_state
-              next unless match = scanner.scan(rule)
+              next unless matched = scanner.scan(rule)
 
               begin
-                matched = match[0]
+                match = rule.match(matched)
 
                 throw :matched unless meta[:action] != nil
                 outcome = environment.instance_exec(match, &meta[:action])
