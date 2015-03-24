@@ -19,6 +19,7 @@ These are the actual gems that are needed in develoment mode:
 Using columnize 0.9.0
 Using debugger-linecache 1.2.0
 Using slop 3.6.0
+Using byebug 3.5.1
 Using diff-lcs 1.2.5
 Using rspec-support 3.2.1
 Using rspec-core 3.2.0
@@ -28,7 +29,7 @@ Using rspec 3.2.0
 Using bundler 1.8.2
 ```
 
-10 gems only, and 10 out of 10 are only needed in development mode - runtime, will still carry 0 dependencies!
+**11 gems needed in development mode, and 0 gems needed at runtime!**
 
 ## Approaching Lexing and Parsing
 
