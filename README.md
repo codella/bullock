@@ -67,6 +67,10 @@ outcome = parser.parse(tokens)
 
 ## Error Handling
 
+### Lexer Errors
+
+### Parse errors
+
 ## How to Contribute
 
 ### Principles
