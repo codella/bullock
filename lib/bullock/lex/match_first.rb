@@ -61,7 +61,8 @@ module Bullock
 
             rest = scanner.rest
             rest = rest.length > 5 ? "#{rest[0..5]}..." : rest
-            raise "None of the specified rules could match `#{rest}`"
+            message = "None of the specified rules could match `#{rest}`"
+            raise Bullock::Lex::Error.new(message, line, column, offset, context)
           end
         end
 

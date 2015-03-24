@@ -1,4 +1,5 @@
 require 'bullock/lex/match_first'
+require 'bullock/lex/error'
 
 describe Bullock::Lex::MatchFirst do
   describe "matching criteria" do
@@ -32,6 +33,22 @@ describe Bullock::Lex::MatchFirst do
 
       lexer = Bullock::Lex::MatchFirst.new(rules)
       expect(lexer.lex('xx').map(&:token)).to eq [:LONGER_MATCH, :EOS]
+    end
+  end
+
+  describe "errors" do
+    it "cannot match first character" do
+      rules = {
+        /x/ => {
+          state: :a_state,
+          action: nil
+        }
+      }
+
+      lexer = Bullock::Lex::MatchFirst.new(rules)
+      expect do
+        lexer.lex('a')
+      end.to raise_error(Bullock::Lex::Error)
     end
   end
 
