@@ -31,7 +31,7 @@ Using bundler 1.8.2
 
 **11 gems needed in development mode, and 0 gems needed at runtime!**
 
-## Approaching Lexing and Parsing
+## How to Bullock
 
 ### Lexing
 ```ruby
@@ -42,6 +42,10 @@ end
 
 tokens = lexer.lex(string)
 ```
+
+#### Match First Lexer
+
+#### Match Longest Lexer
 
 ### Parsing
 ```ruby
