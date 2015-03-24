@@ -37,7 +37,7 @@ describe Bullock::Lex::MatchFirst do
 
   describe "positioning" do
     describe "line number" do
-      it "produces tokens with the right line position when there is only one line" do
+      it "when there is only one line" do
         rules = {
           /x/ => {
             state: :base,
@@ -53,7 +53,7 @@ describe Bullock::Lex::MatchFirst do
         expect(lexer.lex('....x')[-2].line).to eq 1
       end
 
-      it "produces tokens with the right line position when there are more lines" do
+      it "when there are more lines" do
         rules = {
           /x/ => {
             state: :base,
@@ -71,7 +71,7 @@ describe Bullock::Lex::MatchFirst do
     end
 
     describe "column number" do
-      it "produces tokens with the right column position when there is only one line" do
+      it "when there is only one line" do
         rules = {
           /x/ => {
             state: :base,
@@ -87,7 +87,7 @@ describe Bullock::Lex::MatchFirst do
         expect(lexer.lex('....x')[-2].column).to eq 5
       end
 
-      it "produces tokens with the right column position when there are more lines" do
+      it "when there are more lines" do
         rules = {
           /x/ => {
             state: :base,
@@ -101,6 +101,59 @@ describe Bullock::Lex::MatchFirst do
 
         lexer = Bullock::Lex::MatchFirst.new(rules)
         expect(lexer.lex("..\n..x")[-2].column).to eq 3
+      end
+    end
+
+    describe "length" do
+    end
+
+    describe "offset" do
+      it "when matching the beginning of the string" do
+        rules = {
+          /x/ => {
+            state: :base,
+            action: ->(match){ :X }
+          },
+          /./ => {
+            state: :base,
+            action: nil
+          }
+        }
+
+        lexer = Bullock::Lex::MatchFirst.new(rules)
+        expect(lexer.lex('x....').first.offset).to eq 0
+      end
+
+      it "when matching the end of the string" do
+        rules = {
+          /x/ => {
+            state: :base,
+            action: ->(match){ :X }
+          },
+          /./ => {
+            state: :base,
+            action: nil
+          }
+        }
+
+        lexer = Bullock::Lex::MatchFirst.new(rules)
+        expect(lexer.lex('....x')[-2].offset).to eq 4
+      end
+
+      it "when string has new lines" do
+        rules = {
+          /x/ => {
+            state: :base,
+            action: ->(match){ :X }
+          },
+          /./m => {
+            state: :base,
+            action: nil
+          }
+        }
+
+        lexer = Bullock::Lex::MatchFirst.new(rules)
+        expect(lexer.lex(".\n.\n.\n.x")[-2].offset).to eq 7
       end
     end
   end

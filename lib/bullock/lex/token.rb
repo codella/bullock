@@ -2,12 +2,13 @@ module Bullock
   module Lex
     class Token
 
-      attr_reader :token, :value, :line, :column, :offset, :context
+      attr_reader :token, :value, :line, :column, :length, :offset, :context
 
-      def initialize(outcome, match, line, column, offset, context)
+      def initialize(outcome, match, line, column, length, offset, context)
         @token, @value = *normalize_outcome(outcome, match)
         @line = line
         @column = column
+        @length = length
         @offset = offset
         @context = context
       end
@@ -29,7 +30,7 @@ module Bullock
         end
       end
 
-      EOS = new(:EOS, nil, nil, nil, nil, {})
+      EOS = new(:EOS, nil, nil, nil, nil, nil, nil)
     end
   end
 end

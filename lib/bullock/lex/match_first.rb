@@ -17,32 +17,46 @@ module Bullock
         scanner = StringScanner.new(string)
         tokens = []
         environment = Bullock::Lex::Environment.new
+
         line = 1
-        column = 0
+        column = 1
+        offset = 0
+
         until scanner.eos?
           catch :matched do
             rules.each do |rule, meta|
               next unless meta[:state] == environment.current_state
               next unless match = scanner.scan(rule)
 
-              matched = match[0]
-              number_of_newlines = matched.count("\n")
-              line += number_of_newlines
-              if number_of_newlines > 0
-                column = matched.rpartition("\n").last.length
-              else
-                column += matched.length
+              begin
+                matched = match[0]
+
+                throw :matched unless meta[:action] != nil
+                outcome = environment.instance_exec(match, &meta[:action])
+
+                throw :matched unless outcome != nil
+                token = Bullock::Lex::Token.new(
+                  outcome,
+                  matched,
+                  line,
+                  column,
+                  matched.length,
+                  offset,
+                  context
+                )
+                tokens.push(token)
+
+                throw :matched
+              ensure
+                number_of_newlines = matched.count("\n")
+                line += number_of_newlines
+                if number_of_newlines > 0
+                  column = matched.rpartition("\n").last.length + 1
+                else
+                  column += matched.length
+                end
+                offset += matched.length
               end
-              offset = string.length - scanner.rest.length
-
-              throw :matched unless meta[:action] != nil
-              outcome = environment.instance_exec(match, &meta[:action])
-
-              throw :matched unless outcome != nil
-              token = Bullock::Lex::Token.new(outcome, matched, line, column, offset, context)
-              tokens.push(token)
-
-              throw :matched
             end
 
             rest = scanner.rest
@@ -50,6 +64,7 @@ module Bullock
             raise "None of the specified rules could match `#{rest}`"
           end
         end
+
         tokens << Bullock::Lex::Token::EOS
       end
 
