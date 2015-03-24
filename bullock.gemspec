@@ -13,7 +13,6 @@ Gem::Specification.new do |s|
   s.test_files    = `git ls-files -- spec/*`.split("\n")
   s.require_paths = ["lib"]
 
-  s.add_development_dependency "rake"
   s.add_development_dependency "byebug"
   s.add_development_dependency "rspec", "~> 3.2.0"
 end
