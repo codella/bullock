@@ -6,11 +6,11 @@ describe Bullock::Lex::MatchFirst do
       rules = {
         /x/ => {
           state: :base,
-          action: ->(match){ :SMALLER_MATCH }
+          action: Proc.new { :SMALLER_MATCH }
         },
         /xx/ => {
           state: :base,
-          action: ->(match){ :LONGER_MATCH }
+          action: Proc.new { :LONGER_MATCH }
         }
       }
 
@@ -22,11 +22,11 @@ describe Bullock::Lex::MatchFirst do
       rules = {
         /x/ => {
           state: :a_state,
-          action: ->(match){ :SMALLER_MATCH }
+          action: Proc.new { :SMALLER_MATCH }
         },
         /xx/ => {
           state: :base,
-          action: ->(match){ :LONGER_MATCH }
+          action: Proc.new { :LONGER_MATCH }
         }
       }
 
@@ -41,7 +41,7 @@ describe Bullock::Lex::MatchFirst do
         rules = {
           /x/ => {
             state: :base,
-            action: ->(match){ :X }
+            action: Proc.new { :X }
           },
           /./ => {
             state: :base,
@@ -57,7 +57,7 @@ describe Bullock::Lex::MatchFirst do
         rules = {
           /x/ => {
             state: :base,
-            action: ->(match){ :X }
+            action: Proc.new { :X }
           },
           /./m => {
             state: :base,
@@ -75,7 +75,7 @@ describe Bullock::Lex::MatchFirst do
         rules = {
           /x/ => {
             state: :base,
-            action: ->(match){ :X }
+            action: Proc.new { :X }
           },
           /./ => {
             state: :base,
@@ -91,7 +91,7 @@ describe Bullock::Lex::MatchFirst do
         rules = {
           /x/ => {
             state: :base,
-            action: ->(match){ :X }
+            action: Proc.new { :X }
           },
           /./m => {
             state: :base,
@@ -109,7 +109,7 @@ describe Bullock::Lex::MatchFirst do
         rules = {
           /x+/ => {
             state: :base,
-            action: ->(match){ :X }
+            action: Proc.new { :X }
           }
         }
 
@@ -121,7 +121,7 @@ describe Bullock::Lex::MatchFirst do
         rules = {
           /x+/ => {
             state: :base,
-            action: ->(match){ :X }
+            action: Proc.new { :X }
           }
         }
 
@@ -135,7 +135,7 @@ describe Bullock::Lex::MatchFirst do
         rules = {
           /x/ => {
             state: :base,
-            action: ->(match){ :X }
+            action: Proc.new { :X }
           },
           /./ => {
             state: :base,
@@ -151,7 +151,7 @@ describe Bullock::Lex::MatchFirst do
         rules = {
           /x/ => {
             state: :base,
-            action: ->(match){ :X }
+            action: Proc.new { :X }
           },
           /./ => {
             state: :base,
@@ -167,7 +167,7 @@ describe Bullock::Lex::MatchFirst do
         rules = {
           /x/ => {
             state: :base,
-            action: ->(match){ :X }
+            action: Proc.new { :X }
           },
           /./m => {
             state: :base,
