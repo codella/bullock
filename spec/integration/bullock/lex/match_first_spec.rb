@@ -35,8 +35,8 @@ describe Bullock::Lex::MatchFirst do
     end
   end
 
-  describe "puts EOS token at the end of the stream" do
-    it "when string is empty" do
+  describe "token stream" do
+    it "puts EOS token at the end of the stream when string is empty" do
       rules = {
         /x/ => {
           state: :base,
@@ -48,7 +48,7 @@ describe Bullock::Lex::MatchFirst do
       expect(lexer.lex('').last.token).to eq :EOS
     end
 
-    it "when string is not empty" do
+    it "puts EOS token at the end of the stream when string is not empty" do
       rules = {
         /./ => {
           state: :base,
@@ -58,6 +58,18 @@ describe Bullock::Lex::MatchFirst do
 
       lexer = Bullock::Lex::MatchFirst.new(rules)
       expect(lexer.lex('....').last.token).to eq :EOS
+    end
+
+    it "does not produce any token when no action is specified" do
+      rules = {
+        /./ => {
+          state: :base,
+          action: nil
+        }
+      }
+
+      lexer = Bullock::Lex::MatchFirst.new(rules)
+      expect(lexer.lex('....').length).to be 1
     end
   end
 
@@ -105,7 +117,7 @@ describe Bullock::Lex::MatchFirst do
           },
           /./ => {
             state: :base,
-            action: nil
+            action: Proc.new { :DOT }
           }
         }
 
