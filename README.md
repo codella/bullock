@@ -12,7 +12,7 @@ At first, I started my investigation to understand what is the best PEG for me a
 
 We ended up choosing RLTK, that in my opinion is a good example of clear API in terms of lexing and parsing specification - so we decided to adopt it. Although we found it compelling an clean at first, we ended up in merging in our runtime other gems that are an unnecessary risk for us. This happened simply because this implementation, like many other out there, they do **more than we actually needed**.
 
-This gem aims to give to the Ruby world a simple PEG implementation, with a smooth learning curve, simple API, excellent test coverage, many examples of usage with great explanation and, last but not least, **no runtime dependencies at all**.
+This gem aims to give to the Ruby world a simple PEG implementation, with a smooth learning curve, simple API, excellent test coverage, examples of usage with great explanation and, last but not least, **no runtime dependencies at all**.
 
 These are the actual gems that are needed in develoment mode:
 ```
