@@ -2,7 +2,7 @@ module Bullock
   module Parse
     class ItemSet
       def self.from_productions(productions)
-        tracks = produtions.map do |production|
+        tracks = productions.map do |production|
           Track.from_production(production)
         end
         new(tracks)
@@ -13,7 +13,7 @@ module Bullock
       end
 
       def pointed_symbols
-        tracks.map(&:pointed)
+        tracks.map(&:pointed).uniq
       end
 
       def apply(step)

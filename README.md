@@ -51,9 +51,7 @@ tokens = lexer.lex(string)
 
 ### Parsing
 ```ruby
-parser = Bullock.parser do
-  start_from :a
-
+parser = Bullock.parser(start: :a) do
   symbol(:a) do
     produces('a b .c') { |c| ... }
     produces('x y z') { |x, y, z| ... }

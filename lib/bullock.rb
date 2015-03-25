@@ -7,24 +7,25 @@
 
 module Bullock
   class << self
-    def lexer(&definition)
-      rules_collector = Bullock::Lex::RulesCollector.new
-      rules_collector.instance_exec(&definition)
+    def lexer(&block)
+      definition = Bullock::Lex::Definition.new
+      definition.instance_exec(&block)
 
-      Bullock::Lex::MatchFirst.new(rules_collector.rules)
+      Bullock::Lex::MatchFirst.new(definition.rules)
     end
 
-    def parser(&definition)
-      grammar = Bullock::Parse::Grammar.new
-      grammar.instance_exec(&definition)
+    def parser(start:, &block)
+      definition = Bullock::Parse::Definition.new
+      definition.instance_exec(&block)
 
+      grammar = Bullock::Parse::Grammar.new(start, definition.productions)
       Bullock::Parse::LALR1.new(grammar)
     end
   end
 end
 
-require 'bullock/lex/rules_collector'
+require 'bullock/lex/definition'
 require 'bullock/lex/match_first'
 
-require 'bullock/parse/grammar'
+require 'bullock/parse/definition'
 require 'bullock/parse/lalr1'
