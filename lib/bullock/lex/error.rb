@@ -1,6 +1,8 @@
+require 'bullock/error'
+
 module Bullock
   module Lex
-    class Error < StandardError
+    class Error < Bullock::Error
       attr_reader :line, :column, :offset, :context
 
       def initialize(message, line, column, offset, context)

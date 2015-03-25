@@ -1,8 +1,10 @@
+require 'bullock/error'
+
 module Bullock
   module Parse
-    class Error < StandardError
+    class Error < Bullock::Error
       attr_reader :line, :column, :length, :offset, :context
-      
+
       def initialize(message, line, column, length, offset, context)
         @line = line
         @column = column
