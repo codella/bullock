@@ -1,6 +1,8 @@
 module Bullock
   module Parse
     class Track
+      attr_reader :symbol, :expansion, :pointer
+
       def self.from_production(production)
         new(production.symbol, production.expansion, 0)
       end
@@ -13,7 +15,7 @@ module Bullock
 
       def proceed
         next_pointer = [pointer + 1, expansion.length].min
-        Bullock::Parse::Track.new(symbol, expansion, next_pointer)
+        self.class.new(symbol, expansion, next_pointer)
       end
 
       def pointed
@@ -21,9 +23,11 @@ module Bullock
         expansion[pointer]
       end
 
-      private
-
-      attr_reader :symbol, :expansion, :pointer
+      def ==(other_track)
+        symbol == other_track.symbol &&
+          expansion == other_track.expansion &&
+          pointer == other_track.pointer
+      end
     end
   end
 end

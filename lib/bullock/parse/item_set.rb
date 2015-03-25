@@ -1,6 +1,8 @@
 module Bullock
   module Parse
     class ItemSet
+      attr_reader :tracks
+
       def self.from_productions(productions)
         tracks = productions.map do |production|
           Track.from_production(production)
@@ -18,20 +20,19 @@ module Bullock
 
       def apply(step)
         proceeded_tracks = tracks.map do |track|
-          next unless track.pointed == step
+          next unless track.pointed[:symbol] == step
           track.proceed
         end.compact
 
-        new(proceeded_tracks)
+        self.class.new(proceeded_tracks)
       end
 
       def ==(other_item_set)
-        tracks == other_item_set.tracks
+        unique_tracks = tracks.uniq
+        other_unique_tracks = other_item_set.tracks.uniq
+        return false unless unique_tracks.length == other_unique_tracks.length
+        unique_tracks.all? { |track| other_unique_tracks.include? track }
       end
-
-      private
-
-      attr_reader :tracks
     end
   end
 end
