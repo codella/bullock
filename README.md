@@ -19,7 +19,7 @@ These are the actual gems that are needed in develoment mode:
 Using columnize 0.9.0
 Using debugger-linecache 1.2.0
 Using slop 3.6.0
-Using byebug 3.5.1
+Using byebug 4.0.3
 Using diff-lcs 1.2.5
 Using rspec-support 3.2.1
 Using rspec-core 3.2.0
