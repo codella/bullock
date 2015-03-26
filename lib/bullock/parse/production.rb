@@ -4,6 +4,10 @@ module Bullock
       attr_reader :symbol, :expansion, :action
 
       def initialize(symbol, expansion_string, &action)
+        raise "A right-hand side symbol must be specified" unless symbol.is_a? Symbol
+        unless expansion_string != nil && expansion_string.strip.length != 0
+          raise "An expansion string must be specified"
+        end
         raise "Productions must have an associated action" unless action != nil
 
         @symbol = symbol
