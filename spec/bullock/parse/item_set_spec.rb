@@ -84,8 +84,84 @@ describe Bullock::Parse::ItemSet do
   end
 
   describe "#pointed_symbols" do
+    it "returns the pointed symbols" do
+      a_track = Bullock::Parse::Track.new(:a_symbol, [
+        {
+          symbol: :X,
+          argument: false,
+          optional: false
+        }, {
+          symbol: :Y,
+          argument: false,
+          optional: false
+        }], 1)
+      another_track = Bullock::Parse::Track.new(:a_symbol, [
+        {
+          symbol: :X,
+          argument: false,
+          optional: false
+        }, {
+          symbol: :Y,
+          argument: false,
+          optional: false
+        }], 0)
+      item_set = Bullock::Parse::ItemSet.new([a_track, another_track])
+
+      expect(item_set.pointed_symbols).to contain_exactly({
+        symbol: :X,
+        argument: false,
+        optional: false
+      }, {
+        symbol: :Y,
+        argument: false,
+        optional: false
+      })
+    end
   end
 
   describe "#==" do
+    it "returns true when tracks coincides" do
+      item_set = Bullock::Parse::ItemSet.new([
+        Bullock::Parse::Track.new(:symbol, [{
+            symbol: :X,
+            argument: false,
+            optional: false
+          }], 0
+        )]
+      )
+
+      equal_item_set = Bullock::Parse::ItemSet.new([
+        Bullock::Parse::Track.new(:symbol, [{
+            symbol: :X,
+            argument: false,
+            optional: false
+          }], 0
+        )]
+      )
+
+      expect(item_set == equal_item_set).to be_truthy
+    end
+
+    it "returns false when tracks differs" do
+      item_set = Bullock::Parse::ItemSet.new([
+        Bullock::Parse::Track.new(:symbol, [{
+            symbol: :X,
+            argument: false,
+            optional: false
+          }], 0
+        )]
+      )
+
+      different_item_set = Bullock::Parse::ItemSet.new([
+        Bullock::Parse::Track.new(:symbol, [{
+            symbol: :Y,
+            argument: true,
+            optional: true
+          }], 1
+        )]
+      )
+
+      expect(item_set == different_item_set).to be_falsey
+    end
   end
 end
