@@ -8,8 +8,8 @@ module Bullock
         @productions = []
       end
 
-      def produces(expansion)
-        productions << Production.new(@symbol, expansion)
+      def produces(expansion, &action)
+        productions << Production.new(@symbol, expansion, &action)
       end
     end
   end

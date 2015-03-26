@@ -7,24 +7,24 @@ describe Bullock::Parse::Definition do
     expect(instance.productions).to be_empty
   end
 
-  # it "gives a single rule when rule is called only once" do
-  #   instance = Bullock::Parse::Definition.new
-  #
-  #   instance.rule(/regex/) {}
-  #
-  #   expect(instance.rules.keys.length).to eq 1
-  # end
-  #
-  # it "stores a rule also when using instance_eval" do
-  #   instance = Bullock::Parse::Definition.new
-  #
-  #   instance.instance_eval do
-  #     rule(/regex/) {}
-  #   end
-  #
-  #   expect(instance.rules.keys.length).to eq 1
-  # end
-  #
+  it "gives a single production when rule is called only once" do
+    instance = Bullock::Parse::Definition.new
+
+    instance.production(:a_symbol, 'expansion') {}
+
+    expect(instance.productions.length).to eq 1
+  end
+
+  it "stores a production also when using instance_eval" do
+    instance = Bullock::Parse::Definition.new
+
+    instance.instance_eval do
+      production(:a_symbol, 'expansion') {}
+    end
+
+    expect(instance.productions.length).to eq 1
+  end
+
   # it "accepts an action for a given rule" do
   #   instance = Bullock::Parse::Definition.new
   #   action = ->{}

@@ -16,8 +16,8 @@ module Bullock
         productions.concat(symbol_expansions.productions)
       end
 
-      def production(symbol, expansion)
-        productions << Bullock::Parse::Production.new(symbol, expansion)
+      def production(symbol, expansion, &action)
+        productions << Bullock::Parse::Production.new(symbol, expansion, &action)
       end
     end
   end

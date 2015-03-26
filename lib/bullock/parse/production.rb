@@ -1,11 +1,14 @@
 module Bullock
   module Parse
     class Production
-      attr_reader :symbol, :expansion
+      attr_reader :symbol, :expansion, :action
 
-      def initialize(symbol, expansion_string)
+      def initialize(symbol, expansion_string, &action)
+        raise "Productions must have an associated action" unless action != nil
+
         @symbol = symbol
         @expansion = create_expansion(expansion_string)
+        @action = action
       end
 
       def ==(other_production)

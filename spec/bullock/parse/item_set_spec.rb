@@ -36,8 +36,8 @@ describe Bullock::Parse::ItemSet do
     let(:grammar) do
       definition = Bullock::Parse::Definition.new
       definition.instance_exec do
-        production(:a_symbol, 'X Y')
-        production(:another_symbol, 'A B')
+        production(:a_symbol, 'X Y') {}
+        production(:another_symbol, 'A B') {}
       end
 
       Bullock::Parse::Grammar.new(definition, start: :a_symbol)
