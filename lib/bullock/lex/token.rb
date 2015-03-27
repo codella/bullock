@@ -2,9 +2,10 @@ module Bullock
   module Lex
     class Token
 
-      attr_reader :token, :value, :line, :column, :length, :offset, :context
+      attr_reader :regexp, :token, :value, :line, :column, :length, :offset, :context
 
-      def initialize(outcome, match, line, column, length, offset, context)
+      def initialize(regexp, outcome, match, line, column, length, offset, context)
+        @regexp = regexp
         @token, @value = *normalize_outcome(outcome, match)
         @line = line
         @column = column
@@ -30,7 +31,7 @@ module Bullock
         end
       end
 
-      EOS = new(:EOS, nil, nil, nil, nil, nil, nil)
+      EOS = new(nil, :EOS, nil, nil, nil, nil, nil, nil)
     end
   end
 end

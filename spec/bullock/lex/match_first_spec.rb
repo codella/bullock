@@ -88,150 +88,166 @@ describe Bullock::Lex::MatchFirst do
       lexer = Bullock::Lex::MatchFirst.new(rules)
       expect(lexer.lex('....').length).to be 1
     end
-  end
 
-  describe "positioning" do
-    describe "line number" do
-      it "when there is only one line" do
-        rules = {
-          /x/ => {
-            state: :base,
-            action: Proc.new { :X }
-          },
-          /./ => {
-            state: :base,
-            action: nil
-          }
+    it "stores the matching regexp in the produced token" do
+      rules = {
+        /xx/ => {
+          state: :base,
+          action: Proc.new { :TOKEN }
+        },
+        /x/ => {
+          state: :base,
+          action: Proc.new { :TOKEN }
         }
+      }
 
-        lexer = Bullock::Lex::MatchFirst.new(rules)
-        expect(lexer.lex('....x')[-2].line).to eq 1
-      end
-
-      it "when there are more lines" do
-        rules = {
-          /x/ => {
-            state: :base,
-            action: Proc.new { :X }
-          },
-          /./m => {
-            state: :base,
-            action: nil
-          }
-        }
-
-        lexer = Bullock::Lex::MatchFirst.new(rules)
-        expect(lexer.lex("..\n..x")[-2].line).to eq 2
-      end
+      lexer = Bullock::Lex::MatchFirst.new(rules)
+      expect(lexer.lex('xx').first.regexp).to eq /xx/
     end
 
-    describe "column number" do
-      it "when there is only one line" do
-        rules = {
-          /x/ => {
-            state: :base,
-            action: Proc.new { :X }
-          },
-          /./ => {
-            state: :base,
-            action: Proc.new { :DOT }
+    describe "positioning" do
+      describe "line number" do
+        it "when there is only one line" do
+          rules = {
+            /x/ => {
+              state: :base,
+              action: Proc.new { :X }
+            },
+            /./ => {
+              state: :base,
+              action: nil
+            }
           }
-        }
 
-        lexer = Bullock::Lex::MatchFirst.new(rules)
-        expect(lexer.lex('....x')[-2].column).to eq 5
+          lexer = Bullock::Lex::MatchFirst.new(rules)
+          expect(lexer.lex('....x')[-2].line).to eq 1
+        end
+
+        it "when there are more lines" do
+          rules = {
+            /x/ => {
+              state: :base,
+              action: Proc.new { :X }
+            },
+            /./m => {
+              state: :base,
+              action: nil
+            }
+          }
+
+          lexer = Bullock::Lex::MatchFirst.new(rules)
+          expect(lexer.lex("..\n..x")[-2].line).to eq 2
+        end
       end
 
-      it "when there are more lines" do
-        rules = {
-          /x/ => {
-            state: :base,
-            action: Proc.new { :X }
-          },
-          /./m => {
-            state: :base,
-            action: nil
+      describe "column number" do
+        it "when there is only one line" do
+          rules = {
+            /x/ => {
+              state: :base,
+              action: Proc.new { :X }
+            },
+            /./ => {
+              state: :base,
+              action: Proc.new { :DOT }
+            }
           }
-        }
 
-        lexer = Bullock::Lex::MatchFirst.new(rules)
-        expect(lexer.lex("..\n..x")[-2].column).to eq 3
-      end
-    end
+          lexer = Bullock::Lex::MatchFirst.new(rules)
+          expect(lexer.lex('....x')[-2].column).to eq 5
+        end
 
-    describe "length" do
-      it "when matching a 1 character token" do
-        rules = {
-          /x+/ => {
-            state: :base,
-            action: Proc.new { :X }
+        it "when there are more lines" do
+          rules = {
+            /x/ => {
+              state: :base,
+              action: Proc.new { :X }
+            },
+            /./m => {
+              state: :base,
+              action: nil
+            }
           }
-        }
 
-        lexer = Bullock::Lex::MatchFirst.new(rules)
-        expect(lexer.lex('x').first.length).to eq 1
-      end
-
-      it "when matching a 2 character token" do
-        rules = {
-          /x+/ => {
-            state: :base,
-            action: Proc.new { :X }
-          }
-        }
-
-        lexer = Bullock::Lex::MatchFirst.new(rules)
-        expect(lexer.lex('xx').first.length).to eq 2
-      end
-    end
-
-    describe "offset" do
-      it "when matching the beginning of the string" do
-        rules = {
-          /x/ => {
-            state: :base,
-            action: Proc.new { :X }
-          },
-          /./ => {
-            state: :base,
-            action: nil
-          }
-        }
-
-        lexer = Bullock::Lex::MatchFirst.new(rules)
-        expect(lexer.lex('x....').first.offset).to eq 0
+          lexer = Bullock::Lex::MatchFirst.new(rules)
+          expect(lexer.lex("..\n..x")[-2].column).to eq 3
+        end
       end
 
-      it "when matching the end of the string" do
-        rules = {
-          /x/ => {
-            state: :base,
-            action: Proc.new { :X }
-          },
-          /./ => {
-            state: :base,
-            action: nil
+      describe "length" do
+        it "when matching a 1 character token" do
+          rules = {
+            /x+/ => {
+              state: :base,
+              action: Proc.new { :X }
+            }
           }
-        }
 
-        lexer = Bullock::Lex::MatchFirst.new(rules)
-        expect(lexer.lex('....x')[-2].offset).to eq 4
+          lexer = Bullock::Lex::MatchFirst.new(rules)
+          expect(lexer.lex('x').first.length).to eq 1
+        end
+
+        it "when matching a 2 character token" do
+          rules = {
+            /x+/ => {
+              state: :base,
+              action: Proc.new { :X }
+            }
+          }
+
+          lexer = Bullock::Lex::MatchFirst.new(rules)
+          expect(lexer.lex('xx').first.length).to eq 2
+        end
       end
 
-      it "when string has new lines" do
-        rules = {
-          /x/ => {
-            state: :base,
-            action: Proc.new { :X }
-          },
-          /./m => {
-            state: :base,
-            action: nil
+      describe "offset" do
+        it "when matching the beginning of the string" do
+          rules = {
+            /x/ => {
+              state: :base,
+              action: Proc.new { :X }
+            },
+            /./ => {
+              state: :base,
+              action: nil
+            }
           }
-        }
 
-        lexer = Bullock::Lex::MatchFirst.new(rules)
-        expect(lexer.lex(".\n.\n.\n.x")[-2].offset).to eq 7
+          lexer = Bullock::Lex::MatchFirst.new(rules)
+          expect(lexer.lex('x....').first.offset).to eq 0
+        end
+
+        it "when matching the end of the string" do
+          rules = {
+            /x/ => {
+              state: :base,
+              action: Proc.new { :X }
+            },
+            /./ => {
+              state: :base,
+              action: nil
+            }
+          }
+
+          lexer = Bullock::Lex::MatchFirst.new(rules)
+          expect(lexer.lex('....x')[-2].offset).to eq 4
+        end
+
+        it "when string has new lines" do
+          rules = {
+            /x/ => {
+              state: :base,
+              action: Proc.new { :X }
+            },
+            /./m => {
+              state: :base,
+              action: nil
+            }
+          }
+
+          lexer = Bullock::Lex::MatchFirst.new(rules)
+          expect(lexer.lex(".\n.\n.\n.x")[-2].offset).to eq 7
+        end
       end
     end
   end

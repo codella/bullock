@@ -36,6 +36,7 @@ module Bullock
 
                 throw :matched unless outcome != nil
                 token = Bullock::Lex::Token.new(
+                  rule,
                   outcome,
                   matched,
                   line,
