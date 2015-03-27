@@ -20,7 +20,7 @@ module Bullock
 
       def apply(step)
         proceeded_tracks = tracks.map do |track|
-          next unless track.pointed[:symbol] == step
+          next unless track.pointed.symbol == step
           track.proceed
         end.compact
 

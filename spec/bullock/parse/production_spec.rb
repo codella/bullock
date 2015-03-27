@@ -17,25 +17,25 @@ describe Bullock::Parse::Production do
     it "creates production that by default is not an argument" do
       production = Bullock::Parse::Production.new(:symbol, 'a') {}
 
-      expect(production.expansion.first[:argument]).to be_falsey
+      expect(production.expansion.first.argument?).to be_falsey
     end
 
     it "creates production that by default is mandatory" do
       production = Bullock::Parse::Production.new(:symbol, 'a') {}
 
-      expect(production.expansion.first[:optional]).to be_falsey
+      expect(production.expansion.first.optional?).to be_falsey
     end
 
     it "creates production one symbol to pass as argument" do
       production = Bullock::Parse::Production.new(:symbol, '.a') {}
 
-      expect(production.expansion.first[:argument]).to be_truthy
+      expect(production.expansion.first.argument?).to be_truthy
     end
 
     it "creates production one symbol that is an argument" do
       production = Bullock::Parse::Production.new(:symbol, 'a?') {}
 
-      expect(production.expansion.first[:optional]).to be_truthy
+      expect(production.expansion.first.optional?).to be_truthy
     end
 
     it "raises an error when right-hand symbol is not a Symbol" do

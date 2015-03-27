@@ -1,3 +1,5 @@
+require 'bullock/parse/expansion_symbol'
+
 module Bullock
   module Parse
     class Production
@@ -28,11 +30,11 @@ module Bullock
 
         expansions.map do |symbol_string|
           match = /(\.?)(\w+)(\??)/.match(symbol_string)
-          {
-            symbol: match[2].to_sym,
-            argument: match[1] == '.',
-            optional: match[3] == '?'
-          }
+          Bullock::Parse::ExpansionSymbol.new(
+            match[2].to_sym,
+            match[1] == '.',
+            match[3] == '?'
+          )
         end
       end
     end

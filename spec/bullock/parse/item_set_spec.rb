@@ -1,34 +1,21 @@
 require 'bullock/parse/item_set'
 require 'bullock/parse/definition'
+require 'bullock/parse/expansion_symbol'
 require 'bullock/parse/grammar'
 require 'bullock/parse/track'
 
 describe Bullock::Parse::ItemSet do
   let(:a_track) do
     Bullock::Parse::Track.new(:a_symbol, [
-      {
-        symbol: :X,
-        argument: false,
-        optional: false
-      }, {
-        symbol: :Y,
-        argument: false,
-        optional: false
-      }
+      Bullock::Parse::ExpansionSymbol.new(:X, false, false),
+      Bullock::Parse::ExpansionSymbol.new(:Y, false, false)
     ], 0)
   end
 
   let(:another_track) do
     Bullock::Parse::Track.new(:another_symbol, [
-      {
-        symbol: :A,
-        argument: false,
-        optional: false
-      }, {
-        symbol: :B,
-        argument: false,
-        optional: false
-      }
+      Bullock::Parse::ExpansionSymbol.new(:A, false, false),
+      Bullock::Parse::ExpansionSymbol.new(:B, false, false)
     ], 0)
   end
 
@@ -49,13 +36,8 @@ describe Bullock::Parse::ItemSet do
       )
 
       entry_point_track = Bullock::Parse::Track.new(:__entry_point_a_symbol, [
-          {
-            symbol: :a_symbol,
-            argument: false,
-            optional: false
-          }
-        ], 0
-      )
+        Bullock::Parse::ExpansionSymbol.new(:a_symbol, false, false)
+      ], 0)
       expected_tracks = [entry_point_track, a_track, another_track]
       expected_item_set = Bullock::Parse::ItemSet.new(expected_tracks)
 
@@ -68,15 +50,9 @@ describe Bullock::Parse::ItemSet do
       item_set = Bullock::Parse::ItemSet.new([a_track, another_track])
 
       expected_track = Bullock::Parse::Track.new(:a_symbol, [
-        {
-          symbol: :X,
-          argument: false,
-          optional: false
-        }, {
-          symbol: :Y,
-          argument: false,
-          optional: false
-        }], 1)
+        Bullock::Parse::ExpansionSymbol.new(:X, false, false),
+        Bullock::Parse::ExpansionSymbol.new(:Y, false, false)
+      ], 1)
       expected_item_set = Bullock::Parse::ItemSet.new([expected_track])
 
       expect(item_set.apply(:X)).to eq expected_item_set
@@ -86,80 +62,51 @@ describe Bullock::Parse::ItemSet do
   describe "#pointed_symbols" do
     it "returns the pointed symbols" do
       a_track = Bullock::Parse::Track.new(:a_symbol, [
-        {
-          symbol: :X,
-          argument: false,
-          optional: false
-        }, {
-          symbol: :Y,
-          argument: false,
-          optional: false
-        }], 1)
+        Bullock::Parse::ExpansionSymbol.new(:X, false, false),
+        Bullock::Parse::ExpansionSymbol.new(:Y, false, false)
+      ], 1)
       another_track = Bullock::Parse::Track.new(:a_symbol, [
-        {
-          symbol: :X,
-          argument: false,
-          optional: false
-        }, {
-          symbol: :Y,
-          argument: false,
-          optional: false
-        }], 0)
+        Bullock::Parse::ExpansionSymbol.new(:X, false, false),
+        Bullock::Parse::ExpansionSymbol.new(:Y, false, false)
+      ], 0)
       item_set = Bullock::Parse::ItemSet.new([a_track, another_track])
 
-      expect(item_set.pointed_symbols).to contain_exactly({
-        symbol: :X,
-        argument: false,
-        optional: false
-      }, {
-        symbol: :Y,
-        argument: false,
-        optional: false
-      })
+      expect(item_set.pointed_symbols).to contain_exactly(
+        Bullock::Parse::ExpansionSymbol.new(:X, false, false),
+        Bullock::Parse::ExpansionSymbol.new(:Y, false, false)
+      )
     end
   end
 
   describe "#==" do
     it "returns true when tracks coincides" do
       item_set = Bullock::Parse::ItemSet.new([
-        Bullock::Parse::Track.new(:symbol, [{
-            symbol: :X,
-            argument: false,
-            optional: false
-          }], 0
-        )]
-      )
+        Bullock::Parse::Track.new(:symbol, [
+          Bullock::Parse::ExpansionSymbol.new(:X, false, false)
+        ], 0)
+      ])
 
       equal_item_set = Bullock::Parse::ItemSet.new([
-        Bullock::Parse::Track.new(:symbol, [{
-            symbol: :X,
-            argument: false,
-            optional: false
-          }], 0
-        )]
-      )
+        Bullock::Parse::Track.new(:symbol, [
+          Bullock::Parse::ExpansionSymbol.new(:X, false, false)
+        ], 0)
+      ])
 
       expect(item_set == equal_item_set).to be_truthy
     end
 
     it "returns false when tracks differs" do
       item_set = Bullock::Parse::ItemSet.new([
-        Bullock::Parse::Track.new(:symbol, [{
-            symbol: :X,
-            argument: false,
-            optional: false
-          }], 0
-        )]
-      )
+        Bullock::Parse::Track.new(:symbol, [
+          Bullock::Parse::ExpansionSymbol.new(:X, false, false)
+        ], 0)
+      ])
 
       different_item_set = Bullock::Parse::ItemSet.new([
-        Bullock::Parse::Track.new(:symbol, [{
-            symbol: :Y,
-            argument: true,
-            optional: true
-          }], 1
-        )]
-      )
+        Bullock::Parse::Track.new(:symbol, [
+          Bullock::Parse::ExpansionSymbol.new(:Y, true, true)
+        ], 1)
+      ])
 
       expect(item_set == different_item_set).to be_falsey
     end
