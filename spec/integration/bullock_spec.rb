@@ -11,9 +11,7 @@ describe Bullock do
   end
 
   # it "instantiates a parser" do
-  #   lexer = Bullock.parser do
-  #     start_from :first
-  #
+  #   lexer = Bullock.parser(start: :first) do
   #     production(:a, 'b c d') {}
   #     production(:first, 'a') {}
   #   end
