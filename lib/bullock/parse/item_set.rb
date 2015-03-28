@@ -1,3 +1,5 @@
+require 'bullock/parse/track'
+
 module Bullock
   module Parse
     class ItemSet
@@ -15,12 +17,14 @@ module Bullock
       end
 
       def pointed_symbols
-        tracks.map(&:pointed).uniq
+        steps = tracks.map(&:pointed).uniq
+        steps.delete :EOT
+        steps
       end
 
       def apply(step)
         proceeded_tracks = tracks.map do |track|
-          next unless track.pointed.symbol == step
+          next unless track.pointed.symbol == step.symbol
           track.proceed
         end.compact
 

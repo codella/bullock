@@ -55,7 +55,8 @@ describe Bullock::Parse::ItemSet do
       ], 1)
       expected_item_set = Bullock::Parse::ItemSet.new([expected_track])
 
-      expect(item_set.apply(:X)).to eq expected_item_set
+      step = Bullock::Parse::ExpansionSymbol.new(:X, false, false)
+      expect(item_set.apply(step)).to eq expected_item_set
     end
   end
 
