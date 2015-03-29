@@ -12,6 +12,8 @@ describe Bullock::Parse::ItemSetsDfa do
     let(:middle) { Bullock::Parse::Symbol.new(:middle, false, false) }
     let(:stop) { Bullock::Parse::Symbol.new(:stop, false, false) }
 
+    let(:action) { ->{} }
+
     describe "generates the dfa" do
       it "for `start -> stop`" do
         definition = Bullock::Parse::Definition.new
@@ -20,14 +22,14 @@ describe Bullock::Parse::ItemSetsDfa do
         end
         grammar = Bullock::Parse::Grammar.new(definition, start: :start)
 
-        i0_track_1 = Bullock::Parse::Track.new(entry_point, [start], 0)
-        i0_track_2 = Bullock::Parse::Track.new(start, [stop], 0)
+        i0_track_1 = Bullock::Parse::Track.new(entry_point, [start], 0, action)
+        i0_track_2 = Bullock::Parse::Track.new(start, [stop], 0, action)
         i0 = Bullock::Parse::ItemSet.new([i0_track_1, i0_track_2])
 
-        i1_track = Bullock::Parse::Track.new(start, [stop], 1)
+        i1_track = Bullock::Parse::Track.new(start, [stop], 1, action)
         i1 = Bullock::Parse::ItemSet.new([i1_track])
 
-        i2_track = Bullock::Parse::Track.new(entry_point, [start], 1)
+        i2_track = Bullock::Parse::Track.new(entry_point, [start], 1, action)
         i2 = Bullock::Parse::ItemSet.new([i2_track])
 
         dfa = Bullock::Parse::ItemSetsDfa.process(grammar)
@@ -46,18 +48,18 @@ describe Bullock::Parse::ItemSetsDfa do
         end
         grammar = Bullock::Parse::Grammar.new(definition, start: :start)
 
-        i0_track_1 = Bullock::Parse::Track.new(entry_point, [start], 0)
-        i0_track_2 = Bullock::Parse::Track.new(start, [middle], 0)
-        i0_track_3 = Bullock::Parse::Track.new(middle, [stop], 0)
+        i0_track_1 = Bullock::Parse::Track.new(entry_point, [start], 0, action)
+        i0_track_2 = Bullock::Parse::Track.new(start, [middle], 0, action)
+        i0_track_3 = Bullock::Parse::Track.new(middle, [stop], 0, action)
         i0 = Bullock::Parse::ItemSet.new([i0_track_1, i0_track_2, i0_track_3])
 
-        i1_track = Bullock::Parse::Track.new(start, [middle], 1)
+        i1_track = Bullock::Parse::Track.new(start, [middle], 1, action)
         i1 = Bullock::Parse::ItemSet.new([i1_track])
 
-        i2_track = Bullock::Parse::Track.new(entry_point, [start], 1)
+        i2_track = Bullock::Parse::Track.new(entry_point, [start], 1, action)
         i2 = Bullock::Parse::ItemSet.new([i2_track])
 
-        i3_track = Bullock::Parse::Track.new(middle, [stop], 1)
+        i3_track = Bullock::Parse::Track.new(middle, [stop], 1, action)
         i3 = Bullock::Parse::ItemSet.new([i3_track])
 
         dfa = Bullock::Parse::ItemSetsDfa.process(grammar)
@@ -78,23 +80,23 @@ describe Bullock::Parse::ItemSetsDfa do
         end
         grammar = Bullock::Parse::Grammar.new(definition, start: :start)
 
-        i0_track_1 = Bullock::Parse::Track.new(entry_point, [start], 0)
-        i0_track_2 = Bullock::Parse::Track.new(start, [this, that], 0)
-        i0_track_3 = Bullock::Parse::Track.new(this, [stop], 0)
-        i0_track_4 = Bullock::Parse::Track.new(that, [stop], 0)
+        i0_track_1 = Bullock::Parse::Track.new(entry_point, [start], 0, action)
+        i0_track_2 = Bullock::Parse::Track.new(start, [this, that], 0, action)
+        i0_track_3 = Bullock::Parse::Track.new(this, [stop], 0, action)
+        i0_track_4 = Bullock::Parse::Track.new(that, [stop], 0, action)
         i0 = Bullock::Parse::ItemSet.new([i0_track_1, i0_track_2, i0_track_3, i0_track_4])
 
-        i1_track = Bullock::Parse::Track.new(start, [this, that], 1)
+        i1_track = Bullock::Parse::Track.new(start, [this, that], 1, action)
         i1 = Bullock::Parse::ItemSet.new([i1_track])
 
-        i2_track = Bullock::Parse::Track.new(entry_point, [start], 1)
+        i2_track = Bullock::Parse::Track.new(entry_point, [start], 1, action)
         i2 = Bullock::Parse::ItemSet.new([i2_track])
 
-        i3_track_1 = Bullock::Parse::Track.new(this, [stop], 1)
-        i3_track_2 = Bullock::Parse::Track.new(that, [stop], 1)
+        i3_track_1 = Bullock::Parse::Track.new(this, [stop], 1, action)
+        i3_track_2 = Bullock::Parse::Track.new(that, [stop], 1, action)
         i3 = Bullock::Parse::ItemSet.new([i3_track_1, i3_track_2])
 
-        i4_track = Bullock::Parse::Track.new(start, [this, that], 2)
+        i4_track = Bullock::Parse::Track.new(start, [this, that], 2, action)
         i4 = Bullock::Parse::ItemSet.new([i4_track])
 
         dfa = Bullock::Parse::ItemSetsDfa.process(grammar)

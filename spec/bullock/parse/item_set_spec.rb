@@ -5,12 +5,14 @@ require 'bullock/parse/grammar'
 require 'bullock/parse/track'
 
 describe Bullock::Parse::ItemSet do
+  let(:action) { ->{} }
+
   let(:a_track) do
     a_symbol = Bullock::Parse::Symbol.new(:a_symbol, false, false)
     Bullock::Parse::Track.new(a_symbol, [
       Bullock::Parse::Symbol.new(:X, false, false),
       Bullock::Parse::Symbol.new(:Y, false, false)
-    ], 0)
+    ], 0, action)
   end
 
   let(:another_track) do
@@ -18,7 +20,7 @@ describe Bullock::Parse::ItemSet do
     Bullock::Parse::Track.new(another_symbol, [
       Bullock::Parse::Symbol.new(:A, false, false),
       Bullock::Parse::Symbol.new(:B, false, false)
-    ], 0)
+    ], 0, action)
   end
 
   describe ".from_productions" do
@@ -40,7 +42,7 @@ describe Bullock::Parse::ItemSet do
       entry_point = Bullock::Parse::Symbol.new(:__entry_point_a_symbol, false, false)
       entry_point_track = Bullock::Parse::Track.new(entry_point, [
         Bullock::Parse::Symbol.new(:a_symbol, false, false)
-      ], 0)
+      ], 0, action)
       expected_tracks = [a_track, another_track, entry_point_track]
       expected_item_set = Bullock::Parse::ItemSet.new(expected_tracks)
 
@@ -56,7 +58,7 @@ describe Bullock::Parse::ItemSet do
       expected_track = Bullock::Parse::Track.new(a_symbol, [
         Bullock::Parse::Symbol.new(:X, false, false),
         Bullock::Parse::Symbol.new(:Y, false, false)
-      ], 1)
+      ], 1, action)
       expected_item_set = Bullock::Parse::ItemSet.new([expected_track])
 
       step = Bullock::Parse::Symbol.new(:X, false, false)
@@ -69,11 +71,11 @@ describe Bullock::Parse::ItemSet do
       a_track = Bullock::Parse::Track.new(:any, [
         Bullock::Parse::Symbol.new(:X, false, false),
         Bullock::Parse::Symbol.new(:Y, false, false)
-      ], 1)
+      ], 1, action)
       another_track = Bullock::Parse::Track.new(:any, [
         Bullock::Parse::Symbol.new(:X, false, false),
         Bullock::Parse::Symbol.new(:Y, false, false)
-      ], 0)
+      ], 0, action)
       item_set = Bullock::Parse::ItemSet.new([a_track, another_track])
 
       expect(item_set.pointed_symbols).to contain_exactly(
@@ -88,13 +90,13 @@ describe Bullock::Parse::ItemSet do
       item_set = Bullock::Parse::ItemSet.new([
         Bullock::Parse::Track.new(:symbol, [
           Bullock::Parse::Symbol.new(:X, false, false)
-        ], 0)
+        ], 0, action)
       ])
 
       equal_item_set = Bullock::Parse::ItemSet.new([
         Bullock::Parse::Track.new(:symbol, [
           Bullock::Parse::Symbol.new(:X, false, false)
-        ], 0)
+        ], 0, action)
       ])
 
       expect(item_set == equal_item_set).to be_truthy
@@ -104,13 +106,13 @@ describe Bullock::Parse::ItemSet do
       item_set = Bullock::Parse::ItemSet.new([
         Bullock::Parse::Track.new(:symbol, [
           Bullock::Parse::Symbol.new(:X, false, false)
-        ], 0)
+        ], 0, action)
       ])
 
       different_item_set = Bullock::Parse::ItemSet.new([
         Bullock::Parse::Track.new(:symbol, [
           Bullock::Parse::Symbol.new(:Y, true, true)
-        ], 1)
+        ], 1, action)
       ])
 
       expect(item_set == different_item_set).to be_falsey
