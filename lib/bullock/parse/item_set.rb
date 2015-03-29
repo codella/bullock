@@ -7,7 +7,7 @@ module Bullock
 
       def self.from_productions(productions)
         tracks = productions.map do |production|
-          Track.from_production(production)
+          ::Bullock::Parse::Track.from_production(production)
         end
         new(tracks)
       end

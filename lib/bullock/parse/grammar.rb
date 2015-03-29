@@ -12,7 +12,8 @@ module Bullock
         end
 
         @start = "__entry_point_#{start}".to_sym
-        productions << Production.new(@start, start.to_s) { |start| start }
+        entry_point = ::Bullock::Parse::Production.new(@start, start.to_s) { |start| start }
+        productions << entry_point
       end
     end
   end

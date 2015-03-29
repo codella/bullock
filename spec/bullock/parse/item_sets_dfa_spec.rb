@@ -1,15 +1,15 @@
 require 'bullock/parse/item_sets_dfa'
 require 'bullock/parse/definition'
 require 'bullock/parse/grammar'
-require 'bullock/parse/expansion_symbol'
+require 'bullock/parse/symbol'
 
 describe Bullock::Parse::ItemSetsDfa do
   describe "#process" do
-    let(:start) { Bullock::Parse::ExpansionSymbol.new(:start, false, false) }
-    let(:this) { Bullock::Parse::ExpansionSymbol.new(:this, false, false) }
-    let(:that) { Bullock::Parse::ExpansionSymbol.new(:that, false, false) }
-    let(:middle) { Bullock::Parse::ExpansionSymbol.new(:middle, false, false) }
-    let(:stop) { Bullock::Parse::ExpansionSymbol.new(:stop, false, false) }
+    let(:start) { Bullock::Parse::Symbol.new(:start, false, false) }
+    let(:this) { Bullock::Parse::Symbol.new(:this, false, false) }
+    let(:that) { Bullock::Parse::Symbol.new(:that, false, false) }
+    let(:middle) { Bullock::Parse::Symbol.new(:middle, false, false) }
+    let(:stop) { Bullock::Parse::Symbol.new(:stop, false, false) }
 
     describe "generates the dfa" do
       it "for `start -> stop`" do

@@ -1,21 +1,21 @@
 require 'bullock/parse/item_set'
 require 'bullock/parse/definition'
-require 'bullock/parse/expansion_symbol'
+require 'bullock/parse/symbol'
 require 'bullock/parse/grammar'
 require 'bullock/parse/track'
 
 describe Bullock::Parse::ItemSet do
   let(:a_track) do
     Bullock::Parse::Track.new(:a_symbol, [
-      Bullock::Parse::ExpansionSymbol.new(:X, false, false),
-      Bullock::Parse::ExpansionSymbol.new(:Y, false, false)
+      Bullock::Parse::Symbol.new(:X, false, false),
+      Bullock::Parse::Symbol.new(:Y, false, false)
     ], 0)
   end
 
   let(:another_track) do
     Bullock::Parse::Track.new(:another_symbol, [
-      Bullock::Parse::ExpansionSymbol.new(:A, false, false),
-      Bullock::Parse::ExpansionSymbol.new(:B, false, false)
+      Bullock::Parse::Symbol.new(:A, false, false),
+      Bullock::Parse::Symbol.new(:B, false, false)
     ], 0)
   end
 
@@ -36,7 +36,7 @@ describe Bullock::Parse::ItemSet do
       )
 
       entry_point_track = Bullock::Parse::Track.new(:__entry_point_a_symbol, [
-        Bullock::Parse::ExpansionSymbol.new(:a_symbol, false, false)
+        Bullock::Parse::Symbol.new(:a_symbol, false, false)
       ], 0)
       expected_tracks = [entry_point_track, a_track, another_track]
       expected_item_set = Bullock::Parse::ItemSet.new(expected_tracks)
@@ -50,12 +50,12 @@ describe Bullock::Parse::ItemSet do
       item_set = Bullock::Parse::ItemSet.new([a_track, another_track])
 
       expected_track = Bullock::Parse::Track.new(:a_symbol, [
-        Bullock::Parse::ExpansionSymbol.new(:X, false, false),
-        Bullock::Parse::ExpansionSymbol.new(:Y, false, false)
+        Bullock::Parse::Symbol.new(:X, false, false),
+        Bullock::Parse::Symbol.new(:Y, false, false)
       ], 1)
       expected_item_set = Bullock::Parse::ItemSet.new([expected_track])
 
-      step = Bullock::Parse::ExpansionSymbol.new(:X, false, false)
+      step = Bullock::Parse::Symbol.new(:X, false, false)
       expect(item_set.apply(step)).to eq expected_item_set
     end
   end
@@ -63,18 +63,18 @@ describe Bullock::Parse::ItemSet do
   describe "#pointed_symbols" do
     it "returns the pointed symbols" do
       a_track = Bullock::Parse::Track.new(:a_symbol, [
-        Bullock::Parse::ExpansionSymbol.new(:X, false, false),
-        Bullock::Parse::ExpansionSymbol.new(:Y, false, false)
+        Bullock::Parse::Symbol.new(:X, false, false),
+        Bullock::Parse::Symbol.new(:Y, false, false)
       ], 1)
       another_track = Bullock::Parse::Track.new(:a_symbol, [
-        Bullock::Parse::ExpansionSymbol.new(:X, false, false),
-        Bullock::Parse::ExpansionSymbol.new(:Y, false, false)
+        Bullock::Parse::Symbol.new(:X, false, false),
+        Bullock::Parse::Symbol.new(:Y, false, false)
       ], 0)
       item_set = Bullock::Parse::ItemSet.new([a_track, another_track])
 
       expect(item_set.pointed_symbols).to contain_exactly(
-        Bullock::Parse::ExpansionSymbol.new(:X, false, false),
-        Bullock::Parse::ExpansionSymbol.new(:Y, false, false)
+        Bullock::Parse::Symbol.new(:X, false, false),
+        Bullock::Parse::Symbol.new(:Y, false, false)
       )
     end
   end
@@ -83,13 +83,13 @@ describe Bullock::Parse::ItemSet do
     it "returns true when tracks coincides" do
       item_set = Bullock::Parse::ItemSet.new([
         Bullock::Parse::Track.new(:symbol, [
-          Bullock::Parse::ExpansionSymbol.new(:X, false, false)
+          Bullock::Parse::Symbol.new(:X, false, false)
         ], 0)
       ])
 
       equal_item_set = Bullock::Parse::ItemSet.new([
         Bullock::Parse::Track.new(:symbol, [
-          Bullock::Parse::ExpansionSymbol.new(:X, false, false)
+          Bullock::Parse::Symbol.new(:X, false, false)
         ], 0)
       ])
 
@@ -99,13 +99,13 @@ describe Bullock::Parse::ItemSet do
     it "returns false when tracks differs" do
       item_set = Bullock::Parse::ItemSet.new([
         Bullock::Parse::Track.new(:symbol, [
-          Bullock::Parse::ExpansionSymbol.new(:X, false, false)
+          Bullock::Parse::Symbol.new(:X, false, false)
         ], 0)
       ])
 
       different_item_set = Bullock::Parse::ItemSet.new([
         Bullock::Parse::Track.new(:symbol, [
-          Bullock::Parse::ExpansionSymbol.new(:Y, true, true)
+          Bullock::Parse::Symbol.new(:Y, true, true)
         ], 1)
       ])
 

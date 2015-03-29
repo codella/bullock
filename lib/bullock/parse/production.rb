@@ -1,4 +1,4 @@
-require 'bullock/parse/expansion_symbol'
+require 'bullock/parse/symbol'
 
 module Bullock
   module Parse
@@ -6,7 +6,7 @@ module Bullock
       attr_reader :symbol, :expansion, :action
 
       def initialize(symbol, expansion_string, &action)
-        raise "A right-hand side symbol must be specified" unless symbol.is_a? Symbol
+        raise "A right-hand side symbol must be specified" unless symbol.is_a? ::Symbol
         unless expansion_string != nil && expansion_string.strip.length != 0
           raise "An expansion string must be specified"
         end
@@ -30,7 +30,7 @@ module Bullock
 
         expansions.map do |symbol_string|
           match = /(\.?)(\w+)(\??)/.match(symbol_string)
-          Bullock::Parse::ExpansionSymbol.new(
+          ::Bullock::Parse::Symbol.new(
             match[2].to_sym,
             match[1] == '.',
             match[3] == '?'

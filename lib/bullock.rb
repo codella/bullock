@@ -8,18 +8,18 @@
 module Bullock
   class << self
     def lexer(&block)
-      definition = Bullock::Lex::Definition.new
+      definition = ::Bullock::Lex::Definition.new
       definition.instance_exec(&block)
 
-      Bullock::Lex::MatchFirst.new(definition.rules)
+      ::Bullock::Lex::MatchFirst.new(definition.rules)
     end
 
     def parser(start:, &block)
       definition = Bullock::Parse::Definition.new
       definition.instance_exec(&block)
 
-      grammar = Bullock::Parse::Grammar.new(start, definition.productions)
-      Bullock::Parse::LALR1.new(grammar)
+      grammar = ::Bullock::Parse::Grammar.new(start, definition.productions)
+      ::Bullock::Parse::LALR1.new(grammar)
     end
   end
 end

@@ -9,7 +9,7 @@ module Bullock
       end
 
       def produces(expansion, &action)
-        productions << Production.new(@symbol, expansion, &action)
+        productions << Bullock::Parse::Production.new(@symbol, expansion, &action)
       end
     end
   end
