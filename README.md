@@ -80,3 +80,7 @@ outcome = parser.parse(tokens)
 ### Calculator
 
 ### External DSL
+
+## References
+
+ * http://web.cs.dal.ca/~sjackson/lalr1.html
