@@ -30,9 +30,10 @@ describe Bullock::Parse::ItemSetsDfa do
         i2 = Bullock::Parse::ItemSet.new([i2_track])
 
         dfa = Bullock::Parse::ItemSetsDfa.process(grammar)
+        is = dfa.item_sets
         expect(dfa.translation_table).to contain_exactly(
-          [i0, stop, i1],
-          [i0, start, i2]
+          [is.find_index(i0), stop, is.find_index(i1)],
+          [is.find_index(i0), start, is.find_index(i2)]
         )
       end
 
@@ -59,10 +60,11 @@ describe Bullock::Parse::ItemSetsDfa do
         i3 = Bullock::Parse::ItemSet.new([i3_track])
 
         dfa = Bullock::Parse::ItemSetsDfa.process(grammar)
+        is = dfa.item_sets
         expect(dfa.translation_table).to contain_exactly(
-          [i0, middle, i1],
-          [i0, stop, i3],
-          [i0, start, i2]
+          [is.find_index(i0), middle, is.find_index(i1)],
+          [is.find_index(i0), stop, is.find_index(i3)],
+          [is.find_index(i0), start, is.find_index(i2)]
         )
       end
 
@@ -95,11 +97,12 @@ describe Bullock::Parse::ItemSetsDfa do
         i4 = Bullock::Parse::ItemSet.new([i4_track])
 
         dfa = Bullock::Parse::ItemSetsDfa.process(grammar)
+        is = dfa.item_sets
         expect(dfa.translation_table).to contain_exactly(
-          [i0, this, i1],
-          [i0, stop, i3],
-          [i0, start, i2],
-          [i1, that, i4]
+          [is.find_index(i0), this, is.find_index(i1)],
+          [is.find_index(i0), stop, is.find_index(i3)],
+          [is.find_index(i0), start, is.find_index(i2)],
+          [is.find_index(i1), that, is.find_index(i4)]
         )
       end
     end
