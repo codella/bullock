@@ -6,7 +6,7 @@ module Bullock
     class ItemSetsDfa
       class << self
         def process(grammar)
-          translation_table = []
+          translation_table = {}
 
           item_sets = [Bullock::Parse::ItemSet.from_productions(grammar.productions)]
           item_sets.each_with_index do |item_set, index|
@@ -17,7 +17,7 @@ module Bullock
                 item_sets << destination_item_set
                 destination_index = item_sets.length - 1
               end
-              translation_table << [index, step, destination_index]
+              translation_table[[index, step]] = destination_index
             end
           end
 
