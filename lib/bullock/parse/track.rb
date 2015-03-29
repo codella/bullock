@@ -4,7 +4,7 @@ module Bullock
       attr_reader :expanded, :expansion, :pointer
 
       def self.from_production(production)
-        new(production.symbol, production.expansion, 0)
+        new(production.expanded, production.expansion, 0)
       end
 
       def initialize(expanded, expansion, pointer)

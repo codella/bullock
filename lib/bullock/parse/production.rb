@@ -3,7 +3,7 @@ require 'bullock/parse/symbol'
 module Bullock
   module Parse
     class Production
-      attr_reader :symbol, :expansion, :action
+      attr_reader :expanded, :expansion, :action
 
       def initialize(symbol, expansion_string, &action)
         raise "A right-hand side symbol must be specified" unless symbol.is_a? ::Symbol
@@ -12,13 +12,13 @@ module Bullock
         end
         raise "Productions must have an associated action" unless action != nil
 
-        @symbol = symbol
+        @expanded = ::Bullock::Parse::Symbol.new(symbol, false, false)
         @expansion = create_expansion(expansion_string)
         @action = action
       end
 
       def ==(other_production)
-        symbol == other_production.symbol &&
+        expanded == other_production.expanded &&
           expansion == other_production.expansion
       end
 

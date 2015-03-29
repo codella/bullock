@@ -6,14 +6,16 @@ require 'bullock/parse/track'
 
 describe Bullock::Parse::ItemSet do
   let(:a_track) do
-    Bullock::Parse::Track.new(:a_symbol, [
+    a_symbol = Bullock::Parse::Symbol.new(:a_symbol, false, false)
+    Bullock::Parse::Track.new(a_symbol, [
       Bullock::Parse::Symbol.new(:X, false, false),
       Bullock::Parse::Symbol.new(:Y, false, false)
     ], 0)
   end
 
   let(:another_track) do
-    Bullock::Parse::Track.new(:another_symbol, [
+    another_symbol = Bullock::Parse::Symbol.new(:another_symbol, false, false)
+    Bullock::Parse::Track.new(another_symbol, [
       Bullock::Parse::Symbol.new(:A, false, false),
       Bullock::Parse::Symbol.new(:B, false, false)
     ], 0)
@@ -35,10 +37,11 @@ describe Bullock::Parse::ItemSet do
         grammar.productions
       )
 
-      entry_point_track = Bullock::Parse::Track.new(:__entry_point_a_symbol, [
+      entry_point = Bullock::Parse::Symbol.new(:__entry_point_a_symbol, false, false)
+      entry_point_track = Bullock::Parse::Track.new(entry_point, [
         Bullock::Parse::Symbol.new(:a_symbol, false, false)
       ], 0)
-      expected_tracks = [entry_point_track, a_track, another_track]
+      expected_tracks = [a_track, another_track, entry_point_track]
       expected_item_set = Bullock::Parse::ItemSet.new(expected_tracks)
 
       expect(item_set_from_productions).to eq expected_item_set
@@ -49,7 +52,8 @@ describe Bullock::Parse::ItemSet do
     it "creates a new item set given a symbol" do
       item_set = Bullock::Parse::ItemSet.new([a_track, another_track])
 
-      expected_track = Bullock::Parse::Track.new(:a_symbol, [
+      a_symbol = Bullock::Parse::Symbol.new(:a_symbol, false, false)
+      expected_track = Bullock::Parse::Track.new(a_symbol, [
         Bullock::Parse::Symbol.new(:X, false, false),
         Bullock::Parse::Symbol.new(:Y, false, false)
       ], 1)
@@ -62,11 +66,11 @@ describe Bullock::Parse::ItemSet do
 
   describe "#pointed_symbols" do
     it "returns the pointed symbols" do
-      a_track = Bullock::Parse::Track.new(:a_symbol, [
+      a_track = Bullock::Parse::Track.new(:any, [
         Bullock::Parse::Symbol.new(:X, false, false),
         Bullock::Parse::Symbol.new(:Y, false, false)
       ], 1)
-      another_track = Bullock::Parse::Track.new(:a_symbol, [
+      another_track = Bullock::Parse::Track.new(:any, [
         Bullock::Parse::Symbol.new(:X, false, false),
         Bullock::Parse::Symbol.new(:Y, false, false)
       ], 0)
