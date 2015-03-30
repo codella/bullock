@@ -30,7 +30,7 @@ module Bullock
       end
 
       def symbols
-        @symbols ||= @terminal + @non_terminal
+        @symbols ||= terminals + non_terminals
       end
     end
   end

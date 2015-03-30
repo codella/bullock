@@ -7,7 +7,7 @@ module Bullock
   module Parse
     class ExtendedGrammar
       extend Forwardable
-      def_delegators :grammar, :start, :terminals, :non_terminals
+      def_delegators :grammar, :start, :terminals, :non_terminals, :symbols
 
       attr_reader :grammar, :productions
 
