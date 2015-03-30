@@ -4,7 +4,7 @@
 A simple Ruby PEG implementation - no strings attached!
 
 ## Why Would I Need Another Ruby PEG?
-Probably you don't, but I definitely do, and I would explain you why.
+Probably you don't, but I definitely do and I would like to explain you why.
 
 I have been tackling some interesting tasks recently, such as rewriting a TemplateHandler for Rails that speaks Handlebars.
 
@@ -68,7 +68,7 @@ outcome = parser.parse(tokens)
 
 ### Lexer Errors
 
-### Parse errors
+### Parse Errors
 
 ## How to Contribute
 
