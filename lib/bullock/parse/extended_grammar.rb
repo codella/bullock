@@ -1,13 +1,18 @@
 require 'bullock/parse/extended_production'
 require 'bullock/parse/extended_symbol'
 
+require 'forwardable'
+
 module Bullock
   module Parse
     class ExtendedGrammar
-      attr_reader :start, :productions
+      extend Forwardable
+      def_delegators :grammar, :start, :terminals, :non_terminals
 
-      def initialize(start, dfa)
-        @start = start
+      attr_reader :grammar, :productions
+
+      def initialize(grammar, dfa)
+        @grammar = grammar
         @productions = []
 
         item_sets = dfa.item_sets

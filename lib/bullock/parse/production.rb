@@ -3,7 +3,7 @@ require 'bullock/parse/symbol'
 module Bullock
   module Parse
     class Production
-      attr_reader :expanded, :expansion, :action
+      attr_reader :expanded, :expansion, :action, :terminals, :non_terminals
 
       def initialize(symbol, expansion_string, &block)
         raise "A right-hand side symbol must be specified" unless symbol.is_a? ::Symbol
@@ -23,6 +23,7 @@ module Bullock
 
         @expanded = ::Bullock::Parse::Symbol.new(symbol, false)
         @expansion = create_expansion(expansion_string)
+        @terminals, @non_terminals = @expansion.partition(&:terminal?)
         @action = block
       end
 
@@ -41,9 +42,16 @@ module Bullock
 
         expansions.map do |symbol_string|
           match = /(\.?)(\w+)/.match(symbol_string)
+
+          upcase = match[2] == match[2].upcase
+          downcase = match[2] == match[2].downcase
+          raise "#{match[2]} must be either upcased or downcased" unless upcase || downcase
+
           ::Bullock::Parse::Symbol.new(
             match[2].to_sym,
-            match[1] == '.'
+            match[1] == '.',
+            upcase,
+            downcase
           )
         end
       end

@@ -1,3 +1,5 @@
+require 'bullock/parse/definition'
+
 module Bullock
   module Parse
     class Grammar
@@ -12,8 +14,23 @@ module Bullock
         end
 
         @start = "__entry_point_#{start}".to_sym
-        entry_point = ::Bullock::Parse::Production.new(@start, start.to_s) { |any| any }
-        productions << entry_point
+        @entry_point_production = ::Bullock::Parse::Production.new(@start, start.to_s) { |any| any }
+        productions << @entry_point_production
+      end
+
+      def terminals
+        @terminals ||= productions.map(&:terminals).flatten
+      end
+
+      def non_terminals
+        @non_terminal ||= begin
+          non_terminals = productions.map(&:non_terminals).flatten
+          non_terminals << @entry_point_production.expanded
+        end
+      end
+
+      def symbols
+        @symbols ||= @terminal + @non_terminal
       end
     end
   end

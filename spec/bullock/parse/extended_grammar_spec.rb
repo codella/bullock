@@ -46,7 +46,7 @@ describe Bullock::Parse::ExtendedGrammar do
       action
     )
 
-    extended_grammar = Bullock::Parse::ExtendedGrammar.new(grammar.start, dfa)
+    extended_grammar = Bullock::Parse::ExtendedGrammar.new(grammar, dfa)
     expect(extended_grammar.productions).to contain_exactly(production_1, production_2)
   end
 end
