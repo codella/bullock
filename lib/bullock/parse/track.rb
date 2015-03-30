@@ -32,7 +32,7 @@ module Bullock
           pointer == other_track.pointer
       end
 
-      EOT = ::Bullock::Parse::Symbol.new(:EOT, false, true, false)
+      EOT = ::Bullock::Parse::Symbol.new(:EOT, false, true)
     end
   end
 end

@@ -50,8 +50,7 @@ module Bullock
           ::Bullock::Parse::Symbol.new(
             match[2].to_sym,
             match[1] == '.',
-            upcase,
-            downcase
+            upcase
           )
         end
       end
