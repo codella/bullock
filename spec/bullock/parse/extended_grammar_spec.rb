@@ -4,9 +4,9 @@ require 'bullock/parse/definition'
 require 'bullock/parse/grammar'
 
 describe Bullock::Parse::ExtendedGrammar do
-  let(:entry_point) { Bullock::Parse::Symbol.new(:__entry_point_start, false, false) }
-  let(:start) { Bullock::Parse::Symbol.new(:start, false, false) }
-  let(:stop) { Bullock::Parse::Symbol.new(:stop, false, false) }
+  let(:entry_point) { Bullock::Parse::Symbol.new(:__entry_point_start, false) }
+  let(:start) { Bullock::Parse::Symbol.new(:start, false) }
+  let(:stop) { Bullock::Parse::Symbol.new(:stop, false) }
 
   it "instantiates an extended grammar" do
     action = Proc.new {}

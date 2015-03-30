@@ -5,12 +5,12 @@ require 'bullock/parse/symbol'
 
 describe Bullock::Parse::ItemSetsDfa do
   describe "#process" do
-    let(:entry_point) { Bullock::Parse::Symbol.new(:__entry_point_start, false, false) }
-    let(:start) { Bullock::Parse::Symbol.new(:start, false, false) }
-    let(:this) { Bullock::Parse::Symbol.new(:this, false, false) }
-    let(:that) { Bullock::Parse::Symbol.new(:that, false, false) }
-    let(:middle) { Bullock::Parse::Symbol.new(:middle, false, false) }
-    let(:stop) { Bullock::Parse::Symbol.new(:stop, false, false) }
+    let(:entry_point) { Bullock::Parse::Symbol.new(:__entry_point_start, false) }
+    let(:start) { Bullock::Parse::Symbol.new(:start, false) }
+    let(:this) { Bullock::Parse::Symbol.new(:this, false) }
+    let(:that) { Bullock::Parse::Symbol.new(:that, false) }
+    let(:middle) { Bullock::Parse::Symbol.new(:middle, false) }
+    let(:stop) { Bullock::Parse::Symbol.new(:stop, false) }
 
     let(:action) { ->{} }
 

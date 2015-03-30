@@ -1,5 +1,5 @@
 module Bullock
   module Parse
-    Symbol = Struct.new(:symbol, :argument?, :optional?)
+    Symbol = Struct.new(:symbol, :argument?)
   end
 end

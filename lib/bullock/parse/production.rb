@@ -5,16 +5,25 @@ module Bullock
     class Production
       attr_reader :expanded, :expansion, :action
 
-      def initialize(symbol, expansion_string, &action)
+      def initialize(symbol, expansion_string, &block)
         raise "A right-hand side symbol must be specified" unless symbol.is_a? ::Symbol
-        unless expansion_string != nil && expansion_string.strip.length != 0
-          raise "An expansion string must be specified"
+        unless expansion_string == nil || expansion_string.strip.length != 0
+          raise "An expansion must be either `nil` ar a non empty string"
         end
-        raise "Productions must have an associated action" unless action != nil
 
-        @expanded = ::Bullock::Parse::Symbol.new(symbol, false, false)
+        expansion_with_action = expansion_string != nil && block != nil
+        no_expansion_with_no_action = expansion_string == nil && block == nil
+
+        unless expansion_with_action || no_expansion_with_no_action
+          message = "Productions must have either a non empty expansion with "
+          message << "an associated action, or `nil` expansion with no action "
+          message << "associated."
+          raise message
+        end
+
+        @expanded = ::Bullock::Parse::Symbol.new(symbol, false)
         @expansion = create_expansion(expansion_string)
-        @action = action
+        @action = block
       end
 
       def ==(other_production)
@@ -25,15 +34,16 @@ module Bullock
       private
 
       def create_expansion(expansion_string)
+        return [] unless expansion_string != nil
+
         expansions = expansion_string.split(' ')
         raise "Productions cannot have empty expansion" unless expansions.any?
 
         expansions.map do |symbol_string|
-          match = /(\.?)(\w+)(\??)/.match(symbol_string)
+          match = /(\.?)(\w+)/.match(symbol_string)
           ::Bullock::Parse::Symbol.new(
             match[2].to_sym,
-            match[1] == '.',
-            match[3] == '?'
+            match[1] == '.'
           )
         end
       end

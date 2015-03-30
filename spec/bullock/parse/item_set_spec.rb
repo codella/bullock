@@ -8,18 +8,18 @@ describe Bullock::Parse::ItemSet do
   let(:action) { ->{} }
 
   let(:a_track) do
-    a_symbol = Bullock::Parse::Symbol.new(:a_symbol, false, false)
+    a_symbol = Bullock::Parse::Symbol.new(:a_symbol, false)
     Bullock::Parse::Track.new(a_symbol, [
-      Bullock::Parse::Symbol.new(:X, false, false),
-      Bullock::Parse::Symbol.new(:Y, false, false)
+      Bullock::Parse::Symbol.new(:X, false),
+      Bullock::Parse::Symbol.new(:Y, false)
     ], 0, action)
   end
 
   let(:another_track) do
-    another_symbol = Bullock::Parse::Symbol.new(:another_symbol, false, false)
+    another_symbol = Bullock::Parse::Symbol.new(:another_symbol, false)
     Bullock::Parse::Track.new(another_symbol, [
-      Bullock::Parse::Symbol.new(:A, false, false),
-      Bullock::Parse::Symbol.new(:B, false, false)
+      Bullock::Parse::Symbol.new(:A, false),
+      Bullock::Parse::Symbol.new(:B, false)
     ], 0, action)
   end
 
@@ -39,9 +39,9 @@ describe Bullock::Parse::ItemSet do
         grammar.productions
       )
 
-      entry_point = Bullock::Parse::Symbol.new(:__entry_point_a_symbol, false, false)
+      entry_point = Bullock::Parse::Symbol.new(:__entry_point_a_symbol, false)
       entry_point_track = Bullock::Parse::Track.new(entry_point, [
-        Bullock::Parse::Symbol.new(:a_symbol, false, false)
+        Bullock::Parse::Symbol.new(:a_symbol, false)
       ], 0, action)
       expected_tracks = [a_track, another_track, entry_point_track]
       expected_item_set = Bullock::Parse::ItemSet.new(expected_tracks)
@@ -54,14 +54,14 @@ describe Bullock::Parse::ItemSet do
     it "creates a new item set given a symbol" do
       item_set = Bullock::Parse::ItemSet.new([a_track, another_track])
 
-      a_symbol = Bullock::Parse::Symbol.new(:a_symbol, false, false)
+      a_symbol = Bullock::Parse::Symbol.new(:a_symbol, false)
       expected_track = Bullock::Parse::Track.new(a_symbol, [
-        Bullock::Parse::Symbol.new(:X, false, false),
-        Bullock::Parse::Symbol.new(:Y, false, false)
+        Bullock::Parse::Symbol.new(:X, false),
+        Bullock::Parse::Symbol.new(:Y, false)
       ], 1, action)
       expected_item_set = Bullock::Parse::ItemSet.new([expected_track])
 
-      step = Bullock::Parse::Symbol.new(:X, false, false)
+      step = Bullock::Parse::Symbol.new(:X, false)
       expect(item_set.apply(step)).to eq expected_item_set
     end
   end
@@ -69,18 +69,18 @@ describe Bullock::Parse::ItemSet do
   describe "#pointed_symbols" do
     it "returns the pointed symbols" do
       a_track = Bullock::Parse::Track.new(:any, [
-        Bullock::Parse::Symbol.new(:X, false, false),
-        Bullock::Parse::Symbol.new(:Y, false, false)
+        Bullock::Parse::Symbol.new(:X, false),
+        Bullock::Parse::Symbol.new(:Y, false)
       ], 1, action)
       another_track = Bullock::Parse::Track.new(:any, [
-        Bullock::Parse::Symbol.new(:X, false, false),
-        Bullock::Parse::Symbol.new(:Y, false, false)
+        Bullock::Parse::Symbol.new(:X, false),
+        Bullock::Parse::Symbol.new(:Y, false)
       ], 0, action)
       item_set = Bullock::Parse::ItemSet.new([a_track, another_track])
 
       expect(item_set.pointed_symbols).to contain_exactly(
-        Bullock::Parse::Symbol.new(:X, false, false),
-        Bullock::Parse::Symbol.new(:Y, false, false)
+        Bullock::Parse::Symbol.new(:X, false),
+        Bullock::Parse::Symbol.new(:Y, false)
       )
     end
   end
@@ -89,13 +89,13 @@ describe Bullock::Parse::ItemSet do
     it "returns true when tracks coincides" do
       item_set = Bullock::Parse::ItemSet.new([
         Bullock::Parse::Track.new(:symbol, [
-          Bullock::Parse::Symbol.new(:X, false, false)
+          Bullock::Parse::Symbol.new(:X, false)
         ], 0, action)
       ])
 
       equal_item_set = Bullock::Parse::ItemSet.new([
         Bullock::Parse::Track.new(:symbol, [
-          Bullock::Parse::Symbol.new(:X, false, false)
+          Bullock::Parse::Symbol.new(:X, false)
         ], 0, action)
       ])
 
@@ -105,13 +105,13 @@ describe Bullock::Parse::ItemSet do
     it "returns false when tracks differs" do
       item_set = Bullock::Parse::ItemSet.new([
         Bullock::Parse::Track.new(:symbol, [
-          Bullock::Parse::Symbol.new(:X, false, false)
+          Bullock::Parse::Symbol.new(:X, false)
         ], 0, action)
       ])
 
       different_item_set = Bullock::Parse::ItemSet.new([
         Bullock::Parse::Track.new(:symbol, [
-          Bullock::Parse::Symbol.new(:Y, true, true)
+          Bullock::Parse::Symbol.new(:Y, true)
         ], 1, action)
       ])
 

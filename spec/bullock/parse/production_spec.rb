@@ -2,6 +2,12 @@ require 'bullock/parse/production'
 
 describe Bullock::Parse::Production do
   describe ".new" do
+    it "creates production with `nil` expansion and no action" do
+      production = Bullock::Parse::Production.new(:symbol, nil)
+
+      expect(production.expansion.length).to eq 0
+    end
+
     it "creates production with a single expansion symbol" do
       production = Bullock::Parse::Production.new(:symbol, 'a') {}
 
@@ -20,22 +26,10 @@ describe Bullock::Parse::Production do
       expect(production.expansion.first.argument?).to be_falsey
     end
 
-    it "creates production that by default is mandatory" do
-      production = Bullock::Parse::Production.new(:symbol, 'a') {}
-
-      expect(production.expansion.first.optional?).to be_falsey
-    end
-
     it "creates production one symbol to pass as argument" do
       production = Bullock::Parse::Production.new(:symbol, '.a') {}
 
       expect(production.expansion.first.argument?).to be_truthy
-    end
-
-    it "creates production one symbol that is an argument" do
-      production = Bullock::Parse::Production.new(:symbol, 'a?') {}
-
-      expect(production.expansion.first.optional?).to be_truthy
     end
 
     it "raises an error when right-hand symbol is not a Symbol" do
@@ -50,9 +44,15 @@ describe Bullock::Parse::Production do
       end.to raise_error
     end
 
-    it "raises an error when action is not specified" do
+    it "raises an error when action is not specified for non empty production" do
       expect do
         Bullock::Parse::Production.new(:a_symbol, 'expansion')
+      end.to raise_error
+    end
+
+    it "raises an error when action is specified for empty production" do
+      expect do
+        Bullock::Parse::Production.new(:a_symbol, nil) {}
       end.to raise_error
     end
   end
