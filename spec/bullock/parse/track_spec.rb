@@ -20,18 +20,18 @@ describe Bullock::Parse::Track do
       expect(track.proceed.pointed.symbol).to eq :second
     end
 
-    it "creates a new track pointing to :EOT if already pointing at the end" do
+    it "creates a new track pointing to EOT if already pointing at the end" do
       production = Bullock::Parse::Production.new(:symbol, 'first') {}
       track = Bullock::Parse::Track.from_production(production)
 
-      expect(track.proceed.pointed).to eq :EOT
+      expect(track.proceed.pointed).to eq Bullock::Parse::Track::EOT
     end
 
-    it "keeps returning tracks pointing to :EOT if already pointing at the end" do
+    it "keeps returning tracks pointing to EOT if already pointing at the end" do
       production = Bullock::Parse::Production.new(:symbol, 'first') {}
       track = Bullock::Parse::Track.from_production(production)
 
-      expect(track.proceed.proceed.pointed).to eq :EOT
+      expect(track.proceed.proceed.pointed).to eq Bullock::Parse::Track::EOT
     end
   end
 end

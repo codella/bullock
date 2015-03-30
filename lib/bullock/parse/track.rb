@@ -1,3 +1,5 @@
+require 'bullock/parse/symbol'
+
 module Bullock
   module Parse
     class Track
@@ -20,7 +22,7 @@ module Bullock
       end
 
       def pointed
-        return :EOT unless pointer < expansion.length
+        return EOT unless pointer < expansion.length
         expansion[pointer]
       end
 
@@ -29,6 +31,8 @@ module Bullock
           expansion == other_track.expansion &&
           pointer == other_track.pointer
       end
+
+      EOT = ::Bullock::Parse::Symbol.new(:EOT, false, true, false)
     end
   end
 end

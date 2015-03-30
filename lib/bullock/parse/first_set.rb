@@ -3,12 +3,14 @@ module Bullock
     class FirstSet
       class << self
         def make(extended_grammar)
-          first_set = {}
+          first_set = extended_grammar.terminals.inject({}) do |memo, terminal|
+            memo[terminal] = terminal
+          end
           all_symbols = extended_grammar.symbols
 
           until first_set.length == all_symbols.length
             extended_grammar.production.each do |production|
-              
+
             end
           end
         end

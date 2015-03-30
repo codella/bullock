@@ -18,7 +18,7 @@ module Bullock
 
       def pointed_symbols
         steps = tracks.map(&:pointed).uniq
-        steps.delete :EOT
+        steps.delete ::Bullock::Parse::Track::EOT
         steps
       end
 
