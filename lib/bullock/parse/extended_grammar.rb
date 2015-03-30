@@ -4,9 +4,10 @@ require 'bullock/parse/extended_symbol'
 module Bullock
   module Parse
     class ExtendedGrammar
-      attr_reader :productions
+      attr_reader :start, :productions
 
-      def initialize(entry_point, dfa)
+      def initialize(start, dfa)
+        @start = start
         @productions = []
 
         item_sets = dfa.item_sets
@@ -20,7 +21,7 @@ module Bullock
             expanded = ::Bullock::Parse::ExtendedSymbol.new(
               current_index,
               track.expanded,
-              track.expanded.symbol == entry_point ? :END : tt[[index, track.expanded.symbol]]
+              track.expanded.symbol == start ? :END : tt[[index, track.expanded.symbol]]
             )
 
             expansion = track.expansion.map do |step|
