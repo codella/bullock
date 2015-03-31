@@ -1,33 +1,33 @@
 module Bullock
   module Parse
     class FirstSet
-      class << self
-        def make(extended_grammar)
-          first_set = extended_grammar.terminals.inject({}) do |memo, terminal|
-            memo[terminal] = terminal
-            memo
-          end
+      def process(extended_grammar)
+        first_set = extended_grammar.terminals.inject({}) do |memo, terminal|
+          memo[terminal] = [terminal]
+          memo
+        end
 
-          first_set.merge extended_grammar.productions.select(&:epsilon?).inject({}) do |memo, production|
-            memo[production.expanded] = production.expanded
-            memo
-          end
+        with_empty_expansion = extended_grammar.productions.select(&:empty?).map do |production|
+          production.expanded
+        end
+byebug
+        compute(extended_grammar.start, extended_grammar, first_set, with_empty_expansion)
+      end
 
-          all_symbols = extended_grammar.symbols
-
-          until first_set.length == all_symbols.length
-            extended_grammar.productions.each do |production|
-              production.expansion.each do |symbol|
-                first_set[production.expanded] ||= []
-                if symbol.terminal?
-                  first_set[production.expanded] << symbol
-                  break
-                elsif first_set.key? symbol
-                  first_set[production.expanded] += first_set[symbol]
-                  # handle case of epsilon
-                end
-              end
+      def compute(symbol, grammar, first_set, with_empty_expansion)
+        grammar.productions_by(symbol).each do |production|
+          first_set[symbol] ||= []
+          production.expansion.each do |step|
+            next unless symbol != step
+            if step.terminal?
+              first_set[symbol] << step
+              return
             end
+            unless first_set.key? step
+              first_set[step] = compute(step, grammar, first_set, with_empty_expansion)
+            end
+            first_set[production.expanded] += first_set[symbol]
+            return unless with_empty_expansion.include? symbol
           end
         end
       end

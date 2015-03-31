@@ -7,13 +7,15 @@ module Bullock
   module Parse
     class ExtendedGrammar
       extend Forwardable
-      def_delegators :grammar, :start, :terminals, :non_terminals, :symbols
+      def_delegators :grammar, :terminals, :non_terminals
 
-      attr_reader :grammar, :productions
+      attr_reader :grammar, :start, :productions,
+        :entry_point_production
 
       def initialize(grammar, dfa)
         @grammar = grammar
         @productions = []
+        @productions_by_symbol = {}
 
         item_sets = dfa.item_sets
         tt = dfa.translation_table
@@ -26,7 +28,7 @@ module Bullock
             expanded = ::Bullock::Parse::ExtendedSymbol.new(
               current_index,
               track.expanded,
-              track.expanded.symbol == start ? :END : tt[[index, track.expanded.symbol]]
+              track.expanded.symbol == grammar.start ? :END : tt[[index, track.expanded.symbol]]
             )
 
             expansion = track.expansion.map do |step|
@@ -38,9 +40,22 @@ module Bullock
               end
             end
 
-            productions << ::Bullock::Parse::ExtendedProduction.new(expanded, expansion, track.action)
+            production = ::Bullock::Parse::ExtendedProduction.new(expanded, expansion, track.action)
+
+            @productions_by_symbol[expanded] ||= []
+            @productions_by_symbol[expanded] << production
+
+            if track.expanded.symbol == grammar.start
+              @entry_point_production = production
+              @start = expanded
+            end
+            productions << production
           end
         end
+      end
+
+      def productions_by(symbol)
+        @productions_by_symbol[symbol]
       end
     end
   end

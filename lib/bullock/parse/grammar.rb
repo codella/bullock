@@ -28,10 +28,6 @@ module Bullock
           non_terminals << @entry_point_production.expanded
         end
       end
-
-      def symbols
-        @symbols ||= terminals + non_terminals
-      end
     end
   end
 end

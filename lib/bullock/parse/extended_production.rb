@@ -1,9 +1,10 @@
+require 'forwardable'
+
 module Bullock
   module Parse
     ExtendedProduction = Struct.new(:expanded, :expansion, :action) do
-      def epsilon?
-        expansion.empty?
-      end
+      extend Forwardable
+      def_delegators :expansion, :empty?
 
       def ==(other_production)
         expanded == other_production.expanded &&
