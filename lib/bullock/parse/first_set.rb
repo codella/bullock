@@ -2,34 +2,41 @@ module Bullock
   module Parse
     class FirstSet
       def process(extended_grammar)
-        first_set = extended_grammar.terminals.inject({}) do |memo, terminal|
-          memo[terminal] = [terminal]
-          memo
+        first_set = {}
+
+        extended_grammar.terminals.each do |terminal|
+          first_set[terminal] = [terminal]
         end
 
-        with_empty_expansion = extended_grammar.productions.select(&:empty?).map do |production|
-          production.expanded
+        extended_grammar.productions.select(&:empty?).map do |production|
+          first_set[production.expanded] = [:EMPTY]
         end
-byebug
-        compute(extended_grammar.start, extended_grammar, first_set, with_empty_expansion)
+
+        compute(extended_grammar.start, extended_grammar, first_set)
+
+        first_set
       end
 
-      def compute(symbol, grammar, first_set, with_empty_expansion)
+      def compute(symbol, grammar, first_set)
+        first_set[symbol] ||= []
         grammar.productions_by(symbol).each do |production|
-          first_set[symbol] ||= []
-          production.expansion.each do |step|
+          production.expansion.each_with_index do |step, index|
             next unless symbol != step
             if step.terminal?
               first_set[symbol] << step
-              return
+              break
             end
             unless first_set.key? step
-              first_set[step] = compute(step, grammar, first_set, with_empty_expansion)
+              compute(step, grammar, first_set)
             end
-            first_set[production.expanded] += first_set[symbol]
-            return unless with_empty_expansion.include? symbol
+            first_set[symbol] += first_set[step].reject { |value| value == :EMPTY }
+            break unless first_set[step].include? :EMPTY
+            if index == production.expansion.length
+              first_set[symbol] << :EMPTY
+            end
           end
         end
+        first_set
       end
     end
   end

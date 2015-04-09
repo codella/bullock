@@ -1,24 +1,26 @@
 require 'bullock/parse/first_set'
-require 'bullock/parse/extended_grammar'
-require 'bullock/parse/item_sets_dfa'
-require 'bullock/parse/definition'
-require 'bullock/parse/grammar'
+require 'bullock/parse/extended_production'
+require 'bullock/parse/extended_symbol'
+require 'bullock/parse/symbol'
 
 describe Bullock::Parse::FirstSet do
-  let(:extended_grammar) do
-    definition = Bullock::Parse::Definition.new
-    definition.instance_exec do
-      production(:a, 'b T1 c T2 d') {}
-      production(:b, 'c T3') {}
-      production(:c, 'd T4') {}
-      production(:d, 'T5 T6') {}
-    end
-    grammar = Bullock::Parse::Grammar.new(definition, start: :a)
-    dfa = Bullock::Parse::ItemSetsDfa.process(grammar)
-    Bullock::Parse::ExtendedGrammar.new(grammar, dfa)
-  end
+  let(:symbol_T) { Bullock::Parse::Symbol.new(:T, false, true) }
+  let(:symbol_n) { Bullock::Parse::Symbol.new(:n, false, true) }
 
-  it "produces the first_set" do
-    #expect(::Bullock::Parse::FirstSet.new.process(extended_grammar)).to contain_exactly()
+  let(:x_T) { Bullock::Parse::ExtendedSymbol.new(0, symbol_T, 1) }
+  let(:x_n) { Bullock::Parse::ExtendedSymbol.new(0, symbol_n, 1) }
+
+  it "produces the first_set for a single production grammar" do
+    production = ::Bullock::Parse::ExtendedProduction.new(x_n, [x_T], Proc.new {})
+    grammar = double(:extended_grammar)
+    allow(grammar).to receive(:start) { x_n }
+    allow(grammar).to receive(:terminals) { [x_T] }
+    allow(grammar).to receive(:productions) { [production] }
+    allow(grammar).to receive(:productions_by).with(x_n) { [production] }
+
+    expect(::Bullock::Parse::FirstSet.new.process(grammar)).to eq ({
+      x_T => [x_T],
+      x_n => [x_T]
+    })
   end
 end
