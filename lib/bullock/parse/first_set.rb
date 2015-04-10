@@ -17,6 +17,8 @@ module Bullock
         first_set
       end
 
+      private
+
       def compute(symbol, grammar, first_set)
         first_set[symbol] ||= []
         grammar.productions_by(symbol).each do |production|
