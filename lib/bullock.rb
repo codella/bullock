@@ -15,7 +15,7 @@ module Bullock
     end
 
     def parser(start:, &block)
-      definition = Bullock::Parse::Definition.new
+      definition = ::Bullock::Parse::Definition.new
       definition.instance_exec(&block)
 
       grammar = ::Bullock::Parse::Grammar.new(start, definition.productions)
