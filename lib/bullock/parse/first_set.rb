@@ -8,10 +8,6 @@ module Bullock
           first_set[terminal] = [terminal]
         end
 
-        extended_grammar.productions.select(&:empty?).map do |production|
-          first_set[production.expanded] = [:EMPTY]
-        end
-
         compute(extended_grammar.start, extended_grammar, first_set)
 
         first_set
@@ -22,17 +18,27 @@ module Bullock
       def compute(symbol, grammar, first_set)
         first_set[symbol] ||= []
         grammar.productions_by(symbol).each do |production|
+          if production.expansion.empty?
+            first_set[symbol] << :EMPTYg
+            next
+          end
+
           production.expansion.each_with_index do |step, index|
             next unless symbol != step
+
             if step.terminal?
               first_set[symbol] << step
               break
             end
+
             unless first_set.key? step
               compute(step, grammar, first_set)
             end
+
             first_set[symbol] += first_set[step].reject { |value| value == :EMPTY }
+
             break unless first_set[step].include? :EMPTY
+
             if index == production.expansion.length - 1
               first_set[symbol] << :EMPTY
             end
