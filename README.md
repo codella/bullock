@@ -58,7 +58,7 @@ parser = Bullock.parser(start: :a) do
     produces('x y z') { |x, y, z| ... }
   end
 
-  production(:b, 'x .Y? z') { |y| ... }
+  production(:b, 'x .Y z') { |y| ... }
 end
 
 outcome = parser.parse(tokens)
