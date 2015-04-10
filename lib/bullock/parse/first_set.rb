@@ -31,7 +31,7 @@ module Bullock
             end
             first_set[symbol] += first_set[step].reject { |value| value == :EMPTY }
             break unless first_set[step].include? :EMPTY
-            if index == production.expansion.length
+            if index == production.expansion.length - 1
               first_set[symbol] << :EMPTY
             end
           end
