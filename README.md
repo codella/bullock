@@ -85,3 +85,4 @@ outcome = parser.parse(tokens)
 ## References
 
  * http://web.cs.dal.ca/~sjackson/lalr1.html
+ * https://www.cs.uaf.edu/~cs331/notes/FirstFollow.pdf
