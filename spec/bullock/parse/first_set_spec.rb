@@ -2,6 +2,7 @@ require 'bullock/parse/first_set'
 require 'bullock/parse/extended_production'
 require 'bullock/parse/extended_symbol'
 require 'bullock/parse/symbol'
+require 'set'
 
 describe Bullock::Parse::FirstSet do
   let(:_Y) { Bullock::Parse::Symbol.new(:Y, false, true) }
@@ -26,7 +27,7 @@ describe Bullock::Parse::FirstSet do
     allow(grammar).to receive(:productions_by).with(x_a) { [production] }
 
     expect(Bullock::Parse::FirstSet.new.process(grammar)).to eq ({
-      x_a => [:EMPTY]
+      x_a => Set.new([:EMPTY])
     })
   end
 
@@ -39,8 +40,8 @@ describe Bullock::Parse::FirstSet do
     allow(grammar).to receive(:productions_by).with(x_a) { [production] }
 
     expect(Bullock::Parse::FirstSet.new.process(grammar)).to eq ({
-      x_Z => [x_Z],
-      x_a => [x_Z]
+      x_Z => Set.new([x_Z]),
+      x_a => Set.new([x_Z])
     })
   end
 
@@ -56,8 +57,8 @@ describe Bullock::Parse::FirstSet do
     allow(grammar).to receive(:productions_by).with(x_b) { [production_b] }
 
     expect(Bullock::Parse::FirstSet.new.process(grammar)).to eq ({
-      x_a => [:EMPTY],
-      x_b => [:EMPTY]
+      x_a => Set.new([:EMPTY]),
+      x_b => Set.new([:EMPTY])
     })
   end
 
@@ -73,9 +74,9 @@ describe Bullock::Parse::FirstSet do
     allow(grammar).to receive(:productions_by).with(x_b) { [production_b] }
 
     expect(Bullock::Parse::FirstSet.new.process(grammar)).to eq ({
-      x_Z => [x_Z],
-      x_a => [x_Z],
-      x_b => [:EMPTY]
+      x_Z => Set.new([x_Z]),
+      x_a => Set.new([x_Z]),
+      x_b => Set.new([:EMPTY])
     })
   end
 
@@ -92,10 +93,10 @@ describe Bullock::Parse::FirstSet do
     allow(grammar).to receive(:productions_by).with(x_b) { [production_b_1, production_b_2] }
 
     expect(Bullock::Parse::FirstSet.new.process(grammar)).to eq ({
-      x_Y => [x_Y],
-      x_Z => [x_Z],
-      x_a => [x_Y, x_Z],
-      x_b => [x_Y, :EMPTY]
+      x_Y => Set.new([x_Y]),
+      x_Z => Set.new([x_Z]),
+      x_a => Set.new([x_Y, x_Z]),
+      x_b => Set.new([x_Y, :EMPTY])
     })
   end
 end

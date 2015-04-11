@@ -1,3 +1,5 @@
+require 'set'
+
 module Bullock
   module Parse
     class FirstSet
@@ -5,7 +7,7 @@ module Bullock
         first_set = {}
 
         extended_grammar.terminals.each do |terminal|
-          first_set[terminal] = [terminal]
+          first_set[terminal] = Set.new([terminal])
         end
 
         compute(extended_grammar.start, extended_grammar, first_set)
@@ -16,10 +18,10 @@ module Bullock
       private
 
       def compute(symbol, grammar, first_set)
-        first_set[symbol] ||= []
+        first_set[symbol] ||= Set.new
         grammar.productions_by(symbol).each do |production|
           if production.expansion.empty?
-            first_set[symbol] << :EMPTYg
+            first_set[symbol] << :EMPTY
             next
           end
 
@@ -35,7 +37,7 @@ module Bullock
               compute(step, grammar, first_set)
             end
 
-            first_set[symbol] += first_set[step].reject { |value| value == :EMPTY }
+            first_set[symbol] += first_set[step].reject { |s| s == :EMPTY }
 
             break unless first_set[step].include? :EMPTY
 
