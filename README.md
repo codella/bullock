@@ -32,7 +32,7 @@ Using bundler 1.8.2
 **11 gems needed in development mode, and 0 gems needed at runtime!**
 
 ## Why This Logo?
-Well... There was a Yacc, then a Bison followed and now... a Bullock is here :^)
+Well... There was a Yacc, then a Bison followed and now... a Bullock :^)
 
 ## How to Bullock
 
