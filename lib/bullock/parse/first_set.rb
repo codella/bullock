@@ -37,7 +37,7 @@ module Bullock
               compute(step, grammar, first_set)
             end
 
-            first_set[symbol] += first_set[step].reject { |s| s == :EMPTY }
+            first_set[symbol] += first_set[step] - [:EMPTY]
 
             break unless first_set[step].include? :EMPTY
 
