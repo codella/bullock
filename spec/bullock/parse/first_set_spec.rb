@@ -48,8 +48,8 @@ describe Bullock::Parse::FirstSet do
     allow(grammar).to receive(:productions_by).with(x_a) { [production] }
 
     expect(Bullock::Parse::FirstSet.new.process(grammar)).to eq ({
-      x_Z => Set.new([x_Z]),
-      x_a => Set.new([x_Z])
+      x_Z => Set.new([:Z]),
+      x_a => Set.new([:Z])
     })
   end
 
@@ -82,8 +82,8 @@ describe Bullock::Parse::FirstSet do
     allow(grammar).to receive(:productions_by).with(x_b) { [production_b] }
 
     expect(Bullock::Parse::FirstSet.new.process(grammar)).to eq ({
-      x_Z => Set.new([x_Z]),
-      x_a => Set.new([x_Z]),
+      x_Z => Set.new([:Z]),
+      x_a => Set.new([:Z]),
       x_b => Set.new([:EMPTY])
     })
   end
@@ -101,10 +101,10 @@ describe Bullock::Parse::FirstSet do
     allow(grammar).to receive(:productions_by).with(x_b) { [production_b_1, production_b_2] }
 
     expect(Bullock::Parse::FirstSet.new.process(grammar)).to eq ({
-      x_Y => Set.new([x_Y]),
-      x_Z => Set.new([x_Z]),
-      x_a => Set.new([x_Y, x_Z]),
-      x_b => Set.new([x_Y, :EMPTY])
+      x_Y => Set.new([:Y]),
+      x_Z => Set.new([:Z]),
+      x_a => Set.new([:Y, :Z]),
+      x_b => Set.new([:Y, :EMPTY])
     })
   end
 end

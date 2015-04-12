@@ -7,7 +7,7 @@ module Bullock
         first_set = {}
 
         extended_grammar.terminals.each do |terminal|
-          first_set[terminal] = Set.new([terminal])
+          first_set[terminal] = Set.new([terminal.symbol.symbol])
         end
 
         compute(extended_grammar.start, extended_grammar, first_set)
@@ -29,7 +29,7 @@ module Bullock
             next unless symbol != step
 
             if step.terminal?
-              first_set[symbol] << step
+              first_set[symbol] << step.symbol.symbol
               break
             end
 
