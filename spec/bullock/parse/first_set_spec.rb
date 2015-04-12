@@ -5,17 +5,25 @@ require 'bullock/parse/symbol'
 require 'set'
 
 describe Bullock::Parse::FirstSet do
-  let(:_Y) { Bullock::Parse::Symbol.new(:Y, false, true) }
-  let(:x_Y) { Bullock::Parse::ExtendedSymbol.new(0, _Y, 1) }
+  let(:x_Y) do
+    symbol = Bullock::Parse::Symbol.new(:Y, false, true)
+    Bullock::Parse::ExtendedSymbol.new(0, symbol, 1)
+  end
 
-  let(:_Z) { Bullock::Parse::Symbol.new(:Z, false, true) }
-  let(:x_Z) { Bullock::Parse::ExtendedSymbol.new(0, _Z, 1) }
+  let(:x_Z) do
+    symbol = Bullock::Parse::Symbol.new(:Z, false, true)
+    Bullock::Parse::ExtendedSymbol.new(0, symbol, 1)
+  end
 
-  let(:_a) { Bullock::Parse::Symbol.new(:a, false, false) }
-  let(:x_a) { Bullock::Parse::ExtendedSymbol.new(0, _a, 1) }
+  let(:x_a) do
+    symbol = Bullock::Parse::Symbol.new(:a, false, false)
+    Bullock::Parse::ExtendedSymbol.new(0, symbol, 1)
+  end
 
-  let(:_b) { Bullock::Parse::Symbol.new(:b, false, false) }
-  let(:x_b) { Bullock::Parse::ExtendedSymbol.new(0, _b, 1) }
+  let(:x_b) do
+    symbol = Bullock::Parse::Symbol.new(:b, false, false)
+    Bullock::Parse::ExtendedSymbol.new(0, symbol, 1)
+  end
 
   it "puts :EMPTY in the first set if there is an explicit empty production" do
     production = Bullock::Parse::ExtendedProduction.new(x_a, [], Proc.new {})
