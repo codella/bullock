@@ -1,6 +1,3 @@
-require 'bullock/parse/track'
-require 'bullock/parse/production'
-
 describe Bullock::Parse::Track do
   describe ".from_production" do
     it "creates a track that points to 0" do

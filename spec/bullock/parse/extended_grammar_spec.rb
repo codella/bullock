@@ -1,8 +1,3 @@
-require 'bullock/parse/extended_grammar'
-require 'bullock/parse/item_sets_dfa'
-require 'bullock/parse/definition'
-require 'bullock/parse/grammar'
-
 describe Bullock::Parse::ExtendedGrammar do
   let(:entry_point) { Bullock::Parse::Symbol.new(:__entry_point_start) }
   let(:start) { Bullock::Parse::Symbol.new(:start) }

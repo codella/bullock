@@ -1,5 +1,3 @@
-require 'forwardable'
-
 module Bullock
   module Parse
     ExtendedProduction = Struct.new(:expanded, :expansion, :action) do

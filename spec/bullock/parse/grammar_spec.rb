@@ -1,5 +1,3 @@
-require 'bullock/parse/grammar'
-
 describe Bullock::Parse::Grammar do
   it "creates the __entry_point symbol" do
     definition = Bullock::Parse::Definition.new

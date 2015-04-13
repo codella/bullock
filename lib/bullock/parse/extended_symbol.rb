@@ -1,5 +1,3 @@
-require 'forwardable'
-
 module Bullock
   module Parse
     ExtendedSymbol = Struct.new(:current, :symbol, :next) do

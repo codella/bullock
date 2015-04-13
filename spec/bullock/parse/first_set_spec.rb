@@ -1,9 +1,3 @@
-require 'bullock/parse/first_set'
-require 'bullock/parse/extended_production'
-require 'bullock/parse/extended_symbol'
-require 'bullock/parse/symbol'
-require 'set'
-
 describe Bullock::Parse::FirstSet do
   let(:x_Y) do
     symbol = Bullock::Parse::Symbol.new(:Y, false, true)

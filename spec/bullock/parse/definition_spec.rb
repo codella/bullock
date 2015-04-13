@@ -1,5 +1,3 @@
-require 'bullock/parse/definition'
-
 describe Bullock::Parse::Definition do
   it "gives an empty map of rules if rule is never called" do
     instance = Bullock::Parse::Definition.new

@@ -1,5 +1,3 @@
-require 'bullock/lex/definition'
-
 describe Bullock::Lex::Definition do
   it "gives an empty map of rules if rule is never called" do
     instance = Bullock::Lex::Definition.new

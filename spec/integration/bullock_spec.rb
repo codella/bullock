@@ -1,5 +1,3 @@
-require 'bullock'
-
 describe Bullock do
   it "instantiates a lexer" do
     lexer = Bullock.lexer do

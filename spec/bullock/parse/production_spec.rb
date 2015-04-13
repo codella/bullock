@@ -1,5 +1,3 @@
-require 'bullock/parse/production'
-
 describe Bullock::Parse::Production do
   describe ".new" do
     it "creates production with `nil` expansion and no action" do

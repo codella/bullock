@@ -1,6 +1,3 @@
-require 'bullock/parse/production'
-require 'bullock/parse/symbol_expansions'
-
 describe Bullock::Parse::SymbolExpansions do
   describe "#expands" do
     it "no Productions are given if #produces is never invoked" do

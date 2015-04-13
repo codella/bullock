@@ -1,6 +1,3 @@
-require 'bullock/lex/match_first'
-require 'bullock/lex/error'
-
 describe Bullock::Lex::MatchFirst do
   describe "matching criteria" do
     it "executes the action of the first matching rule" do

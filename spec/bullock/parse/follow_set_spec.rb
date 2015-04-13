@@ -1,7 +1,3 @@
-require 'bullock/parse/follow_set'
-require 'bullock/parse/extended_symbol'
-require 'bullock/parse/extended_production'
-require 'bullock/parse/symbol'
 require 'set'
 
 describe Bullock::Parse::FollowSet do

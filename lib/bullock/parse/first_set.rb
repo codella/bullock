@@ -1,5 +1,3 @@
-require 'set'
-
 module Bullock
   module Parse
     class FirstSet

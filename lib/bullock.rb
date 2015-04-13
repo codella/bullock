@@ -24,6 +24,9 @@ module Bullock
   end
 end
 
+require 'forwardable'
+require 'set'
+
 require 'bullock/error'
 
 require 'bullock/lex/definition'
@@ -32,7 +35,6 @@ require 'bullock/lex/error'
 require 'bullock/lex/match_first'
 require 'bullock/lex/token'
 
-require 'bullock/parse/action_goto_table'
 require 'bullock/parse/definition'
 require 'bullock/parse/dfa'
 require 'bullock/parse/error'
@@ -41,6 +43,7 @@ require 'bullock/parse/extended_production'
 require 'bullock/parse/extended_symbol'
 require 'bullock/parse/first_set'
 require 'bullock/parse/follow_set'
+require 'bullock/parse/goto_table'
 require 'bullock/parse/grammar'
 require 'bullock/parse/item_set'
 require 'bullock/parse/item_sets_dfa'

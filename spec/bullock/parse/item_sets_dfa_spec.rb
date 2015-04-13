@@ -1,8 +1,3 @@
-require 'bullock/parse/item_sets_dfa'
-require 'bullock/parse/definition'
-require 'bullock/parse/grammar'
-require 'bullock/parse/symbol'
-
 describe Bullock::Parse::ItemSetsDfa do
   describe "#process" do
     let(:entry_point) { Bullock::Parse::Symbol.new(:__entry_point_start) }

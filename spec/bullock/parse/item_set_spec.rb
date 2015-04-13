@@ -1,9 +1,3 @@
-require 'bullock/parse/item_set'
-require 'bullock/parse/definition'
-require 'bullock/parse/symbol'
-require 'bullock/parse/grammar'
-require 'bullock/parse/track'
-
 describe Bullock::Parse::ItemSet do
   let(:action) { ->{} }
 
