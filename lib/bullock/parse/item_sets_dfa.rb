@@ -21,7 +21,7 @@ module Bullock
             end
           end
 
-          Bullock::Parse::Dfa.new(item_sets, translation_table)
+          ::Bullock::Parse::Dfa.new(item_sets, translation_table)
         end
       end
     end
