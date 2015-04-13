@@ -1,5 +1,3 @@
-require 'bullock/parse/symbol'
-
 module Bullock
   module Parse
     class Track

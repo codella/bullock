@@ -1,5 +1,3 @@
-require 'bullock/parse/track'
-
 module Bullock
   module Parse
     class ItemSet

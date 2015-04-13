@@ -1,5 +1,3 @@
-require 'bullock/error'
-
 module Bullock
   module Lex
     class Error < Bullock::Error

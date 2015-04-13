@@ -1,5 +1,3 @@
-require 'bullock/error'
-
 module Bullock
   module Parse
     class Error < Bullock::Error

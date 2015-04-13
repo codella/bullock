@@ -1,5 +1,3 @@
-require 'bullock/parse/definition'
-
 module Bullock
   module Parse
     class Grammar

@@ -1,6 +1,3 @@
-require 'bullock/lex/environment'
-require 'bullock/lex/token'
-
 module Bullock
   module Lex
     class MatchFirst

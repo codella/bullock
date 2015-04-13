@@ -1,8 +1,3 @@
-require 'bullock/parse/extended_production'
-require 'bullock/parse/extended_symbol'
-
-require 'forwardable'
-
 module Bullock
   module Parse
     class ExtendedGrammar

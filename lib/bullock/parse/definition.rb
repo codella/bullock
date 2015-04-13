@@ -1,6 +1,3 @@
-require 'bullock/parse/production'
-require 'bullock/parse/symbol_expansions'
-
 module Bullock
   module Parse
     class Definition

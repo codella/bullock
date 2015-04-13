@@ -1,6 +1,3 @@
-require 'bullock/parse/item_set'
-require 'bullock/parse/dfa'
-
 module Bullock
   module Parse
     class ItemSetsDfa
