@@ -2,11 +2,11 @@ module Bullock
   module Parse
     class ActionGotoTable
       def initialize(follow_set, extended_grammar, dfa)
-
-        @action_table = {
-          [x, symbol] => [-> { @stack.push(state); consume_token }, y]
-          [x, symbol] => [-> { @stack.push(state); consume_token }, y]
-        }
+        #
+        # @action_table = {
+        #   [x, symbol] => [-> { @stack.push(state); consume_token }, y]
+        #   [x, symbol] => [-> { @stack.push(state); consume_token }, y]
+        # }
       end
 
       def perform(tokens)

@@ -17,7 +17,7 @@ module Bullock
                 item_sets << destination_item_set
                 destination_index = item_sets.length - 1
               end
-              translation_table[[index, step.symbol]] = destination_index
+              translation_table[[index, step.value]] = destination_index
             end
           end
 

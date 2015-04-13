@@ -24,7 +24,7 @@ module Bullock
 
       def apply(step)
         proceeded_tracks = tracks.map do |track|
-          next unless track.pointed.symbol == step.symbol
+          next unless track.pointed.value == step.value
           track.proceed
         end.compact
 

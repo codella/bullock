@@ -1,12 +1,12 @@
 module Bullock
   module Parse
-    Symbol = Struct.new(:symbol, :argument?, :terminal?) do
+    Symbol = Struct.new(:value, :argument?, :terminal?) do
       def non_terminal?
         not terminal?
       end
 
       def ==(other_symbol)
-        symbol == other_symbol.symbol
+        value == other_symbol.value
       end
     end
   end

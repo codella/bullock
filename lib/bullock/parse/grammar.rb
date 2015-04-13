@@ -7,7 +7,7 @@ module Bullock
 
       def initialize(definition, start:)
         @productions = definition.productions
-        unless productions.map(&:expanded).map(&:symbol).include? start
+        unless productions.map(&:expanded).map(&:value).include? start
           message = "At least one production must have `:#{start}` on the "
           message << "right-hand side"
           raise message

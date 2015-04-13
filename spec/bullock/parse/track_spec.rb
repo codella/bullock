@@ -8,7 +8,7 @@ describe Bullock::Parse::Track do
 
       track = Bullock::Parse::Track.from_production(production)
 
-      expect(track.pointed.symbol).to be :first
+      expect(track.pointed.value).to be :first
     end
   end
 
@@ -17,7 +17,7 @@ describe Bullock::Parse::Track do
       production = Bullock::Parse::Production.new(:symbol, 'first second') {}
       track = Bullock::Parse::Track.from_production(production)
 
-      expect(track.proceed.pointed.symbol).to eq :second
+      expect(track.proceed.pointed.value).to eq :second
     end
 
     it "creates a new track pointing to EOT if already pointing at the end" do

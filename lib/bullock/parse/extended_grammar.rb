@@ -28,12 +28,12 @@ module Bullock
             expanded = ::Bullock::Parse::ExtendedSymbol.new(
               current_index,
               track.expanded,
-              track.expanded.symbol == grammar.start ? :END : tt[[index, track.expanded.symbol]]
+              track.expanded.value == grammar.start ? :END : tt[[index, track.expanded.value]]
             )
 
             expansion = track.expansion.map do |step|
               begin
-                next_index = tt[[index, step.symbol]]
+                next_index = tt[[index, step.value]]
                 ::Bullock::Parse::ExtendedSymbol.new(current_index, step, next_index)
               ensure
                 current_index = next_index
@@ -45,7 +45,7 @@ module Bullock
             @productions_by_symbol[expanded] ||= []
             @productions_by_symbol[expanded] << production
 
-            if track.expanded.symbol == grammar.start
+            if track.expanded.value == grammar.start
               @entry_point_production = production
               @start = expanded
             end

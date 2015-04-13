@@ -23,7 +23,7 @@ describe Bullock::Parse::Grammar do
 
       instance = Bullock::Parse::Grammar.new(definition, start: :rule1)
 
-      expect(instance.terminals.map(&:symbol)).to contain_exactly(:TERM1, :TERM2, :TERM3)
+      expect(instance.terminals.map(&:value)).to contain_exactly(:TERM1, :TERM2, :TERM3)
     end
   end
 
@@ -37,7 +37,7 @@ describe Bullock::Parse::Grammar do
 
       instance = Bullock::Parse::Grammar.new(definition, start: :rule1)
 
-      expect(instance.non_terminals.map(&:symbol)).to contain_exactly(
+      expect(instance.non_terminals.map(&:value)).to contain_exactly(
         :__entry_point_rule1,
         :a,
         :b,
