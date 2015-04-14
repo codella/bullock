@@ -1,11 +1,11 @@
 describe Bullock::Parse::ItemSetsDfa do
   describe "#process" do
-    let(:entry_point) { Bullock::Parse::Symbol.new(:__entry_point_start) }
-    let(:start) { Bullock::Parse::Symbol.new(:start) }
-    let(:this) { Bullock::Parse::Symbol.new(:this) }
-    let(:that) { Bullock::Parse::Symbol.new(:that) }
-    let(:middle) { Bullock::Parse::Symbol.new(:middle) }
-    let(:stop) { Bullock::Parse::Symbol.new(:stop) }
+    let(:entry_point) { Bullock::Parse::Symbol.new(:__entry_point_start, false, false) }
+    let(:start) { Bullock::Parse::Symbol.new(:start, false, false) }
+    let(:this) { Bullock::Parse::Symbol.new(:this, false, false) }
+    let(:that) { Bullock::Parse::Symbol.new(:that, false, false) }
+    let(:middle) { Bullock::Parse::Symbol.new(:middle, false, false) }
+    let(:stop) { Bullock::Parse::Symbol.new(:stop, false, false) }
 
     let(:action) { ->{} }
 
@@ -30,8 +30,8 @@ describe Bullock::Parse::ItemSetsDfa do
         dfa = Bullock::Parse::ItemSetsDfa.process(grammar)
         is = dfa.item_sets
         expect(dfa.translation_table).to eq ({
-          [is.find_index(i0), :stop] => is.find_index(i1),
-          [is.find_index(i0), :start] => is.find_index(i2)
+          [is.find_index(i0), stop] => is.find_index(i1),
+          [is.find_index(i0), start] => is.find_index(i2)
         })
       end
 
@@ -60,9 +60,9 @@ describe Bullock::Parse::ItemSetsDfa do
         dfa = Bullock::Parse::ItemSetsDfa.process(grammar)
         is = dfa.item_sets
         expect(dfa.translation_table).to eq({
-          [is.find_index(i0), :middle] => is.find_index(i1),
-          [is.find_index(i0), :stop] => is.find_index(i3),
-          [is.find_index(i0), :start] => is.find_index(i2)
+          [is.find_index(i0), middle] => is.find_index(i1),
+          [is.find_index(i0), stop] => is.find_index(i3),
+          [is.find_index(i0), start] => is.find_index(i2)
         })
       end
 
@@ -97,10 +97,10 @@ describe Bullock::Parse::ItemSetsDfa do
         dfa = Bullock::Parse::ItemSetsDfa.process(grammar)
         is = dfa.item_sets
         expect(dfa.translation_table).to eq({
-          [is.find_index(i0), :this] => is.find_index(i1),
-          [is.find_index(i0), :stop] => is.find_index(i3),
-          [is.find_index(i0), :start] => is.find_index(i2),
-          [is.find_index(i1), :that] => is.find_index(i4)
+          [is.find_index(i0), this] => is.find_index(i1),
+          [is.find_index(i0), stop] => is.find_index(i3),
+          [is.find_index(i0), start] => is.find_index(i2),
+          [is.find_index(i1), that] => is.find_index(i4)
         })
       end
     end
