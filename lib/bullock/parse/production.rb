@@ -19,7 +19,7 @@ module Bullock
           raise message
         end
 
-        @expanded = create_symbol(symbol.to_s)
+        @expanded = ::Bullock::Parse::Symbol.new(symbol)
         @expansion = create_expansion(expansion_string)
         @terminals, @non_terminals = @expansion.partition(&:terminal?)
         @action = block
@@ -38,23 +38,7 @@ module Bullock
         expansions = expansion_string.split(' ')
         raise "Productions cannot have empty expansion" unless expansions.any?
 
-        expansions.map do |symbol_string|
-          create_symbol(symbol_string)
-        end
-      end
-
-      def create_symbol(string)
-        match = /(\.?)(\w+)/.match(string)
-
-        upcase = match[2] == match[2].upcase
-        downcase = match[2] == match[2].downcase
-
-        raise "#{match[2]} must be either upcased or downcased" unless upcase || downcase
-        ::Bullock::Parse::Symbol.new(
-          match[2].to_sym,
-          match[1] == '.',
-          upcase
-        )
+        expansions.map { |symbol| ::Bullock::Parse::Symbol.new(symbol) }
       end
     end
   end

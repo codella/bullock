@@ -1,21 +1,21 @@
 describe Bullock::Parse::FirstSet do
   let(:x_Y) do
-    symbol = Bullock::Parse::Symbol.new(:Y, false, true)
+    symbol = Bullock::Parse::Symbol.new('Y')
     Bullock::Parse::ExtendedSymbol.new(0, symbol, 1)
   end
 
   let(:x_Z) do
-    symbol = Bullock::Parse::Symbol.new(:Z, false, true)
+    symbol = Bullock::Parse::Symbol.new('Z')
     Bullock::Parse::ExtendedSymbol.new(0, symbol, 1)
   end
 
   let(:x_a) do
-    symbol = Bullock::Parse::Symbol.new(:a, false, false)
+    symbol = Bullock::Parse::Symbol.new('a')
     Bullock::Parse::ExtendedSymbol.new(0, symbol, 1)
   end
 
   let(:x_b) do
-    symbol = Bullock::Parse::Symbol.new(:b, false, false)
+    symbol = Bullock::Parse::Symbol.new('b')
     Bullock::Parse::ExtendedSymbol.new(0, symbol, 1)
   end
 

@@ -24,13 +24,13 @@ module Bullock
         expansion[pointer]
       end
 
-      def ==(other_track)
-        expanded == other_track.expanded &&
-          expansion == other_track.expansion &&
-          pointer == other_track.pointer
+      def ==(other)
+        expanded == other.expanded &&
+          expansion == other.expansion &&
+          pointer == other.pointer
       end
 
-      EOT = ::Bullock::Parse::Symbol.new(:EOT, false, true)
+      EOT = ::Bullock::Parse::Symbol.new('EOT')
     end
   end
 end

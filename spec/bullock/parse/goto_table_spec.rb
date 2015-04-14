@@ -1,6 +1,6 @@
 describe Bullock::Parse::GotoTable do
-  let(:terminal) { Bullock::Parse::Symbol.new(:TERMINAL, false, true) }
-  let(:non_terminal) { Bullock::Parse::Symbol.new(:stop, false, false) }
+  let(:terminal) { Bullock::Parse::Symbol.new('TERMINAL') }
+  let(:non_terminal) { Bullock::Parse::Symbol.new('stop') }
 
   it "includes non-terminal translations" do
     translation_table = {

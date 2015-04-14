@@ -29,9 +29,9 @@ module Bullock
         self.class.new(proceeded_tracks)
       end
 
-      def ==(other_item_set)
+      def ==(other)
         unique_tracks = tracks.uniq
-        other_unique_tracks = other_item_set.tracks.uniq
+        other_unique_tracks = other.tracks.uniq
         return false unless unique_tracks.length == other_unique_tracks.length
         unique_tracks.all? { |track| other_unique_tracks.include? track }
       end
