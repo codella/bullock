@@ -1,22 +1,19 @@
 module Bullock
   module Parse
     class Track
-      attr_reader :expanded, :expansion, :pointer, :action
+      extend Forwardable
+      def_delegators :production, :expanded, :expansion, :action
 
-      def self.from_production(production)
-        new(production.expanded, production.expansion, 0, production.action)
-      end
+      attr_reader :production, :pointer
 
-      def initialize(expanded, expansion, pointer, action)
-        @expanded = expanded
-        @expansion = expansion
+      def initialize(production, pointer = 0)
+        @production = production
         @pointer = pointer
-        @action = action
       end
 
       def proceed
         next_pointer = [pointer + 1, expansion.length].min
-        self.class.new(expanded, expansion, next_pointer, action)
+        self.class.new(production, next_pointer)
       end
 
       def pointed

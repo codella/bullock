@@ -35,6 +35,7 @@ require 'bullock/lex/error'
 require 'bullock/lex/match_first'
 require 'bullock/lex/token'
 
+require 'bullock/parse/action_table'
 require 'bullock/parse/definition'
 require 'bullock/parse/dfa'
 require 'bullock/parse/error'

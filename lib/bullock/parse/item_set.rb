@@ -3,13 +3,6 @@ module Bullock
     class ItemSet
       attr_reader :tracks
 
-      def self.from_productions(productions)
-        tracks = productions.map do |production|
-          ::Bullock::Parse::Track.from_production(production)
-        end
-        new(tracks)
-      end
-
       def initialize(tracks)
         @tracks = tracks
       end

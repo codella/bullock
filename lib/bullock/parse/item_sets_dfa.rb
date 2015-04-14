@@ -5,7 +5,10 @@ module Bullock
         def process(grammar)
           translation_table = {}
 
-          item_sets = [Bullock::Parse::ItemSet.from_productions(grammar.productions)]
+          tracks = grammar.productions.map do |production|
+            ::Bullock::Parse::Track.new(production)
+          end
+          item_sets = [Bullock::Parse::ItemSet.new(tracks)]
           item_sets.each_with_index do |item_set, index|
             item_set.pointed_symbols.each do |step|
               destination_item_set = item_set.apply(step)
