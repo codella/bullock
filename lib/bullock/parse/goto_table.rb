@@ -3,12 +3,13 @@ module Bullock
     class GotoTable
       def initialize(translation_table)
         @goto_table = translation_table.select do |key, value|
-          key.second.non_terminal?
+          symbol = key[1]
+          symbol.non_terminal?
         end
       end
 
       def goto(*args)
-        @goto_table[*args]
+        @goto_table.fetch(*args)
       end
     end
   end
