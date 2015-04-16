@@ -1,16 +1,19 @@
 module Bullock
   module Parse
     class ItemSet
-      attr_reader :tracks
+      attr_reader :tracks, :is_accepting
 
       def initialize(tracks)
         @tracks = tracks
+        @is_accepting = begin
+          tracks.any? do |track|
+            track.production.entry_point? && track.eot?
+          end
+        end
       end
 
       def pointed_symbols
-        steps = tracks.map(&:pointed).uniq
-        steps.delete ::Bullock::Parse::Track::EOT
-        steps
+        tracks.reject(&:eot?).map(&:pointed).uniq
       end
 
       def apply(step)

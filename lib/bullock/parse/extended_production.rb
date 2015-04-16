@@ -7,7 +7,8 @@ module Bullock
 
       attr_reader :production
 
-      def compare_by_production_and_end_point(other)
+      def final_state
+        expansion.last.next
       end
     end
   end

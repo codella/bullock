@@ -21,7 +21,7 @@ describe Bullock::Parse::ExtendedGrammar do
 
     grammar = double(:grammar, productions: [production_1, production_2], start: :entry_point)
 
-    dfa = double(:dfa, item_sets: [i0, i1, i2], translation_table: {
+    dfa = double(:dfa, item_sets: [i0, i1, i2], transitions: {
       [0, entry_point] => :END,
       [0, start] => 3,
       [0, stop] => 5

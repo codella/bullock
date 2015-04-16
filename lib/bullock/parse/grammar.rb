@@ -10,9 +10,9 @@ module Bullock
           raise message
         end
 
-        @start = "__entry_point_#{start}".to_sym
-        @entry_point_production = ::Bullock::Parse::Production.new(@start, start.to_s) { |any| any }
-        productions << @entry_point_production
+        @start = "#{::Bullock::Parse::Symbol::ENTRY_POINT_PREFIX}_#{start}".to_sym
+        @goal = ::Bullock::Parse::Production.new(@start, start.to_s) { |any| any }
+        productions << @goal
       end
 
       def terminals
@@ -22,7 +22,7 @@ module Bullock
       def non_terminals
         @non_terminal ||= begin
           non_terminals = productions.map(&:non_terminals).flatten
-          non_terminals << @entry_point_production.expanded
+          non_terminals << @goal.expanded
         end
       end
     end

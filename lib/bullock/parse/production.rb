@@ -25,6 +25,10 @@ module Bullock
         @action = block
       end
 
+      def entry_point?
+        expanded.entry_point?
+      end
+
       def ==(other_production)
         expanded == other_production.expanded &&
           expansion == other_production.expansion

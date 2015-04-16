@@ -7,7 +7,7 @@ describe Bullock::Parse::Grammar do
 
     instance = Bullock::Parse::Grammar.new(definition, start: :a_symbol)
 
-    entry_point = Bullock::Parse::Production.new(:__entry_point_a_symbol, 'a_symbol') {}
+    entry_point = Bullock::Parse::Production.new(:__bullock_entry_point_symbol_a_symbol, 'a_symbol') {}
     expect(instance.productions).to contain_exactly(entry_point, definition.productions.first)
   end
 
@@ -36,7 +36,7 @@ describe Bullock::Parse::Grammar do
       instance = Bullock::Parse::Grammar.new(definition, start: :rule1)
 
       expect(instance.non_terminals.map(&:value)).to contain_exactly(
-        :__entry_point_rule1,
+        :__bullock_entry_point_symbol_rule1,
         :a,
         :b,
         :c,

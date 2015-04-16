@@ -13,7 +13,7 @@ module Bullock
         @productions_by_symbol = {}
 
         item_sets = dfa.item_sets
-        tt = dfa.translation_table
+        tt = dfa.transitions
         item_sets.each_with_index do |item_set, index|
           item_set.tracks.each do |track|
             next unless track.pointer.zero?

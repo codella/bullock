@@ -1,6 +1,8 @@
 module Bullock
   module Parse
     class Symbol
+      ENTRY_POINT_PREFIX = '__bullock_entry_point_symbol'
+
       attr_reader :value
 
       def initialize(symbol)
@@ -26,6 +28,10 @@ module Bullock
 
       def argument?
         @is_argument
+      end
+
+      def entry_point?
+        value.to_s.start_with? ENTRY_POINT_PREFIX
       end
 
       def ==(other)

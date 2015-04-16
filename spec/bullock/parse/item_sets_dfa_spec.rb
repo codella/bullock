@@ -27,7 +27,7 @@ describe Bullock::Parse::ItemSetsDfa do
         grammar = double(:grammar, productions: [production_1, production_2], start: :entry_point)
 
         dfa = Bullock::Parse::ItemSetsDfa.process(grammar)
-        expect(dfa.translation_table).to eq ({
+        expect(dfa.transitions).to eq ({
           [0, start] => 1,
           [0, stop] => 2
         })
@@ -57,7 +57,7 @@ describe Bullock::Parse::ItemSetsDfa do
         ])
 
         dfa = Bullock::Parse::ItemSetsDfa.process(grammar)
-        expect(dfa.translation_table).to eq({
+        expect(dfa.transitions).to eq({
           [0, middle] => 2,
           [0, stop] => 3,
           [0, start] => 1
@@ -94,7 +94,7 @@ describe Bullock::Parse::ItemSetsDfa do
         ])
 
         dfa = Bullock::Parse::ItemSetsDfa.process(grammar)
-        expect(dfa.translation_table).to eq({
+        expect(dfa.transitions).to eq({
           [0, this] => 2,
           [0, stop] => 3,
           [0, start] => 1,

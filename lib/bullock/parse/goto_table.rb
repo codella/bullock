@@ -1,8 +1,8 @@
 module Bullock
   module Parse
     class GotoTable
-      def initialize(translation_table)
-        @goto_table = translation_table.select do |key, value|
+      def initialize(transitions)
+        @goto_table = transitions.select do |key, value|
           symbol = key[1]
           symbol.non_terminal?
         end

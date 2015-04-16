@@ -21,6 +21,10 @@ module Bullock
         expansion[pointer]
       end
 
+      def eot?
+        pointed == EOT
+      end
+
       def ==(other)
         expanded == other.expanded &&
           expansion == other.expansion &&

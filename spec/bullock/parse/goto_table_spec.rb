@@ -3,21 +3,21 @@ describe Bullock::Parse::GotoTable do
   let(:non_terminal) { Bullock::Parse::Symbol.new('stop') }
 
   it "includes non-terminal translations" do
-    translation_table = {
+    transitions = {
       [0, terminal] => 1,
       [1, non_terminal] => 2
     }
-    goto_table = Bullock::Parse::GotoTable.new(translation_table)
+    goto_table = Bullock::Parse::GotoTable.new(transitions)
 
     expect(goto_table.goto([1, non_terminal])).to be 2
   end
 
   it "excludes terminal translations" do
-    translation_table = {
+    transitions = {
       [0, terminal] => 1,
       [1, non_terminal] => 2
     }
-    goto_table = Bullock::Parse::GotoTable.new(translation_table)
+    goto_table = Bullock::Parse::GotoTable.new(transitions)
 
     expect do
       goto_table.goto([0, terminal])
