@@ -1,5 +1,7 @@
 module Bullock
   module Parse
+    Dfa = Struct.new(:item_sets, :translation_table)
+
     class ItemSetsDfa
       class << self
         def process(grammar)

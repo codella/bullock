@@ -37,7 +37,6 @@ require 'bullock/lex/token'
 
 require 'bullock/parse/action_table'
 require 'bullock/parse/definition'
-require 'bullock/parse/dfa'
 require 'bullock/parse/error'
 require 'bullock/parse/extended_grammar'
 require 'bullock/parse/extended_production'
