@@ -4,7 +4,7 @@ module Bullock
       def process(first_set, grammar)
         follow_set = {}
 
-        follow_set[grammar.start] = Set.new([:END])
+        follow_set[grammar.start] = Set.new([:EOS])
 
         previous_follow_set = nil
         until follow_set == previous_follow_set

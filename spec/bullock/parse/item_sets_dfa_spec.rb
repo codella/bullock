@@ -28,8 +28,8 @@ describe Bullock::Parse::ItemSetsDfa do
 
         dfa = Bullock::Parse::ItemSetsDfa.process(grammar)
         expect(dfa.transitions).to eq ({
-          [0, start] => 1,
-          [0, stop] => 2
+          [0, :start] => 1,
+          [0, :stop] => 2
         })
       end
 
@@ -58,9 +58,9 @@ describe Bullock::Parse::ItemSetsDfa do
 
         dfa = Bullock::Parse::ItemSetsDfa.process(grammar)
         expect(dfa.transitions).to eq({
-          [0, middle] => 2,
-          [0, stop] => 3,
-          [0, start] => 1
+          [0, :middle] => 2,
+          [0, :stop] => 3,
+          [0, :start] => 1
         })
       end
 
@@ -95,10 +95,10 @@ describe Bullock::Parse::ItemSetsDfa do
 
         dfa = Bullock::Parse::ItemSetsDfa.process(grammar)
         expect(dfa.transitions).to eq({
-          [0, this] => 2,
-          [0, stop] => 3,
-          [0, start] => 1,
-          [2, that] => 4
+          [0, :this] => 2,
+          [0, :stop] => 3,
+          [0, :start] => 1,
+          [2, :that] => 4
         })
       end
     end

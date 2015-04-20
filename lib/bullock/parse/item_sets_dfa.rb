@@ -19,7 +19,7 @@ module Bullock
                 states << destination_state
                 destination_index = states.length - 1
               end
-              transitions[[index, step]] = destination_index
+              transitions[[index, step.value]] = destination_index
             end
           end
 

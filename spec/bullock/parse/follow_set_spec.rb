@@ -16,14 +16,14 @@ describe Bullock::Parse::FollowSet do
     Bullock::Parse::ExtendedSymbol.new(0, symbol, 1)
   end
 
-  it "puts :END in the follow set of the start symbol" do
+  it "puts :EOS in the follow set of the start symbol" do
     grammar = double(:extended_grammar)
     allow(grammar).to receive(:start) { x_a }
     allow(grammar).to receive(:productions) { [] }
 
     first_set = {}
     expect(Bullock::Parse::FollowSet.new.process(first_set, grammar)).to eq ({
-      x_a => Set.new([:END])
+      x_a => Set.new([:EOS])
     })
   end
 
@@ -36,7 +36,7 @@ describe Bullock::Parse::FollowSet do
 
     first_set = { x_Z => [:Z] }
     expect(Bullock::Parse::FollowSet.new.process(first_set, grammar)).to eq ({
-      x_a => Set.new([:END]),
+      x_a => Set.new([:EOS]),
       x_b => Set.new([:Z])
     })
   end
@@ -51,8 +51,8 @@ describe Bullock::Parse::FollowSet do
 
     first_set = { x_Z => [:Z] }
     expect(Bullock::Parse::FollowSet.new.process(first_set, grammar)).to eq ({
-      x_a => Set.new([:END]),
-      x_b => Set.new([:END])
+      x_a => Set.new([:EOS]),
+      x_b => Set.new([:EOS])
     })
   end
 end

@@ -23,12 +23,12 @@ module Bullock
             expanded = ::Bullock::Parse::ExtendedSymbol.new(
               current_index,
               track.expanded,
-              track.expanded.value == grammar.start ? :END : tt.fetch([index, track.expanded])
+              track.expanded.value == grammar.start ? :EOS : tt.fetch([index, track.expanded.value])
             )
 
             expansion = track.expansion.map do |step|
               begin
-                next_index = tt.fetch([index, step])
+                next_index = tt.fetch([index, step.value])
                 ::Bullock::Parse::ExtendedSymbol.new(current_index, step, next_index)
               ensure
                 current_index = next_index

@@ -22,9 +22,9 @@ describe Bullock::Parse::ExtendedGrammar do
     grammar = double(:grammar, productions: [production_1, production_2], start: :entry_point)
 
     dfa = double(:dfa, item_sets: [i0, i1, i2], transitions: {
-      [0, entry_point] => :END,
-      [0, start] => 3,
-      [0, stop] => 5
+      [0, :entry_point] => :EOS,
+      [0, :start] => 3,
+      [0, :stop] => 5
     })
 
     expanded_symbol_1 = Bullock::Parse::ExtendedSymbol.new(0, start, 3)
@@ -35,7 +35,7 @@ describe Bullock::Parse::ExtendedGrammar do
       action
     )
 
-    expanded_symbol_2 = Bullock::Parse::ExtendedSymbol.new(0, entry_point, :END)
+    expanded_symbol_2 = Bullock::Parse::ExtendedSymbol.new(0, entry_point, :EOS)
     symbol_2 = Bullock::Parse::ExtendedSymbol.new(0, start, 3)
     x_production_2 = Bullock::Parse::ExtendedProduction.new(
       expanded_symbol_2,
