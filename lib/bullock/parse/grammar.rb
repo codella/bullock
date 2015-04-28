@@ -3,8 +3,7 @@ module Bullock
     class Grammar
       attr_reader :start, :productions
 
-      def initialize(definition, start:)
-        @productions = definition.productions
+      def initialize(start, productions)
         unless productions.map(&:expanded).map(&:value).include? start
           message = "At least one production must expand `:#{start}`"
           raise message
@@ -13,6 +12,7 @@ module Bullock
         @start = "#{::Bullock::Parse::Symbol::ENTRY_POINT_PREFIX}_#{start}".to_sym
         @goal = ::Bullock::Parse::Production.new(@start, start.to_s) { |any| any }
         productions << @goal
+        @productions = productions
       end
 
       def terminals

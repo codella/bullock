@@ -5,7 +5,7 @@ module Bullock
         first_set = {}
 
         extended_grammar.terminals.each do |terminal|
-          first_set[terminal] = Set.new([terminal.symbol.value])
+          first_set[terminal] = Set.new([terminal.value])
         end
 
         compute(extended_grammar.start, extended_grammar, first_set)

@@ -21,7 +21,7 @@ module Bullock
 
               follow_set[step] += rest_first_set.reject { |s| s == :EMPTY }
               if rest_first_set.include? :EMPTY
-                follow_set[step] += follow_set[production.expanded]
+                follow_set[step] += (follow_set[production.expanded] || [])
               end
             end
           end
@@ -37,9 +37,10 @@ module Bullock
 
         first_set_for_symbols = Set.new
 
-        symbols.each_with_index do |symbol, index|
-          first_set_for_symbols += first_set[symbol] - [:EMPTY]
-          break unless first_set[symbol].include? :EMPTY
+        symbols.each_with_index do |step, index|
+          step_first_set = first_set[step] || []
+          first_set_for_symbols += step_first_set - [:EMPTY]
+          break unless step_first_set.include? :EMPTY
           if index == symbols.length - 1
             first_set_for_symbols << :EMPTY
           end
